@@ -512,10 +512,10 @@ canvas { touch-action: none; }
     <div class="title-difficulty">
       <label>DIFFICULTY:</label>
       <select id="difficulty-select">
-        <option value="easy">EASY — SLOW ESCALATION</option>
+        <option value="easy">EASY - FOR BEGINNERS </option>
         <option value="normal" selected>NORMAL</option>
-        <option value="hard">HARD — DOUBLE EVENTS</option>
-        <option value="extinction">EXTINCTION MODE — ALL HOSTILE</option>
+        <option value="hard">HARD - DOUBLE EVENTS</option>
+        <option value="extinction">EXTINCTION MODE - GOOD LUCK! EXPORT YOUR SAVE BEFORE STARTING</option>
       </select>
     </div>
     <div class="title-buttons">
@@ -3012,14 +3012,14 @@ const POLICIES = [
   { id:'genome_mapping', cat:'Science & Medicine', name:'GENOME MAPPING PROGRAM', desc:'Comprehensive DNA analysis of all non-sapiens species. Massive one-time knowledge gain.', cost:250, effects:{knowledge:+50, disease:-5}, tags:['Knowledge ↑↑'], oneTime:true },
   { id:'vaccination_program', cat:'Science & Medicine', name:'MASS VACCINATION DRIVE', desc:'Multi-species vaccination against common pathogens. ⚠ Ongoing cost: −80 budget/turn permanently. Ensure stable income before enacting.', cost:300, effects:{disease:-18, public_opinion:+8}, tags:['Disease ↓↓','⚠ −80/turn'], oneTime:false, requires_knowledge:20 },
   { id:'cognitive_assessment', cat:'Science & Medicine', name:'COGNITIVE ASSESSMENT STUDIES', desc:'Scientific determination of cognitive tiers, controversial but legally essential.', cost:200, effects:{knowledge:+30, rights_conflict:+8, stability:+3}, tags:['Knowledge ↑','Rights mixed'], oneTime:true },
-  { id:'de_escalation_units', cat:'Military & Security', name:'DE-ESCALATION SPECIALIST UNITS', desc:'Special forces trained specifically for non-violent contact and conflict resolution.', cost:350, effects:{stability:+8, rights_conflict:+8, extremism:-5}, tags:['Stability ↑','Rights ↑','Conflict ↓'], oneTime:false },
+  { id:'de_escalation_units', cat:'Military & Security', name:'DE-ESCALATION SPECIALIST UNITS', desc:'Special forces trained specifically for non-violent contact and conflict resolution.', cost:350, effects:{stability:+8, rights_conflict:+8, extremism:-8}, tags:['Stability ↑','Rights ↑','Extremism ↓'], oneTime:false },
   { id:'containment_zones', cat:'Military & Security', name:'NEANDERTHAL CONTAINMENT ZONES', desc:'Military perimeter around Neanderthal territories in conflict regions. Galvanises rights advocates and fuels recruitment for extremist factions.', cost:400, effects:{rights_conflict:-25, stability:+8, extremism:+10, integration_score:-12}, tags:['Stability ↑','Rights ↓↓','Extremism ↑','Integration ↓'], oneTime:false, dark:true },
   { id:'extermination_order', cat:'Military & Security', name:'⚠ MILITARY EXTERMINATION CAMPAIGN', desc:'Authorize broad military action against non-sapiens populations in contested regions. Indiscriminate: all Tier 2+ species lose 30–50% population. Extreme diplomatic consequences.', cost:500, effects:{rights_conflict:-40, stability:-20, extremism:+25, public_opinion:-30}, tags:['CATASTROPHIC'], oneTime:false, dark:true, isDark:true },
-  { id:'language_bridge', cat:'Integration Programs', name:'LANGUAGE BRIDGE PROGRAM', desc:'Communication research with near-sapiens species. Foundation for meaningful diplomacy.', cost:200, effects:{integration_score:+12, knowledge:+20, rights_conflict:+5}, tags:['Integration ↑','Knowledge ↑','Rights ↑'], oneTime:false },
-  { id:'safe_harbor_cities', cat:'Integration Programs', name:'SAFE HARBOR CITIES', desc:'Designated urban zones for peaceful coexistence between sapiens and Tier 1–2 species. Requires 300 Knowledge.', cost:350, effects:{integration_score:+15, rights_conflict:+10, extremism:+8, stability:-3}, tags:['Integration ↑↑','Rights ↑'], oneTime:false, requires_knowledge:300 }, 
-  { id:'cultural_exchange', cat:'Integration Programs', name:'CULTURAL EXCHANGE INITIATIVE', desc:'Media and education programs highlighting non-sapiens culture and achievements. Requires 150 Knowledge.', cost:150, effects:{public_opinion:+20, integration_score:+8, extremism:-8}, tags:['Opinion ↑↑','Integration ↑'], oneTime:false, requires_knowledge:150 }, 
+  { id:'language_bridge', cat:'Integration Programs', name:'LANGUAGE BRIDGE PROGRAM', desc:'Communication research with near-sapiens species. Foundation for meaningful diplomacy.', cost:200, effects:{integration_score:+12, knowledge:+20, rights_conflict:+5, extremism:-10}, tags:['Integration ↑','Knowledge ↑','Rights ↑', 'Extremism ↓' ], oneTime:false },
+  { id:'safe_harbor_cities', cat:'Integration Programs', name:'SAFE HARBOR CITIES', desc:'Designated urban zones for peaceful coexistence between sapiens and Tier 1–2 species. Requires 300 Knowledge.', cost:350, effects:{integration_score:+15, rights_conflict:+10, extremism:-20, stability:-3}, tags:['Integration ↑↑','Rights ↑', 'Extremism ↓'], oneTime:false, requires_knowledge:300 }, 
+  { id:'cultural_exchange', cat:'Integration Programs', name:'CULTURAL EXCHANGE INITIATIVE', desc:'Media and education programs highlighting non-sapiens culture and achievements. Requires 150 Knowledge.', cost:150, effects:{public_opinion:+20, integration_score:+8, extremism:-10}, tags:['Opinion ↑↑','Integration ↑', 'Extremism ↓' ], oneTime:false, requires_knowledge:150 }, 
   { id:'who_emergency', cat:'Emergency Actions', name:'WHO EMERGENCY DECLARATION', desc:'Global health emergency response mobilizing international medical resources.', cost:400, effects:{disease:-25, stability:+5}, tags:['Disease ↓↓↓'], oneTime:false, maxUses:3 },
-  { id:'un_summit', cat:'Emergency Actions', name:'UN SPECIES SUMMIT', desc:'Convene international negotiations: major stability boost but costly.', cost:500, effects:{stability:+18, rights_conflict:+8, integration_score:+8}, tags:['Stability ↑↑','Rights ↑'], oneTime:false, maxUses:2 },
+  { id:'un_summit', cat:'Emergency Actions', name:'UN SPECIES SUMMIT', desc:'Convene international negotiations: major stability boost but costly.', cost:500, effects:{stability:+18, rights_conflict:+8, integration_score:+8, extremism:-40}, tags:['Stability ↑↑','Rights ↑', 'Extremism ↓↓↓'], oneTime:false, maxUses:2 },
   { id:'integration_treaty', cat:'Emergency Actions', name:'NON-SAPIENS INTEGRATION TREATY', desc:'Formal international treaty framework. Requires First Contact event.', cost:600, effects:{integration_score:+25, rights_conflict:+20, stability:+10, extremism:+15}, tags:['Integration ↑↑↑','Rights ↑↑'], oneTime:true, requires_knowledge:50, locked:true }
 ];
 
