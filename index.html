@@ -3476,10 +3476,10 @@ function checkTerritorialOverlap() {
             conflictMod *= GS.tierLowBehavior[sd.id] === 'hostile' ? 1.6 : 0.5;
           }
         });
-        const conflictBase = GS.difficulty === 'easy' ? 0.08
-                           : GS.difficulty === 'hard' ? 0.32
-                           : GS.difficulty === 'extinction' ? 0.45
-                           : 0.20;
+        const conflictBase = GS.difficulty === 'easy' ? 0.04
+                           : GS.difficulty === 'hard' ? 0.10
+                           : GS.difficulty === 'extinction' ? 0.15
+                           : 0.07;
         if (Math.random() > conflictBase * conflictMod) continue;
         const lossA = 0.05 + Math.random()*0.10;
         const lossB = 0.05 + Math.random()*0.10;
@@ -3527,7 +3527,7 @@ function checkTerritorialOverlap() {
         GS.meters.stability = Math.max(0, GS.meters.stability - 3);
         GS.meters.extremism = Math.min(100, GS.meters.extremism + 2);
         flashRegion(region);
-        if (Math.random() < 0.35) {
+        if (Math.random() < 0.18) {
           // 1. Try to find an authored event matching EITHER of the two fighting species
           const speciesIds = [sdA.id, sdB.id];
           const matchedEvs = EVENTS.filter(e =>
@@ -4074,7 +4074,7 @@ function generateNewsFlavor() {
 }
 
 function checkLegalFrameworkTriggers() {
-  if (!GS) return;
+  if (!GS || GS.playMode !== 'sapiens') return;
   const policies = GS.policies_enacted || [];
   const triggerChance = GS.difficulty === 'easy' ? 0.20
                       : GS.difficulty === 'hard' ? 0.70
