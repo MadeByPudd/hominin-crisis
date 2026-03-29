@@ -3006,21 +3006,21 @@ const SPECIAL_TRIGGERS = { tinshemet:6, denisovan_pass:12, first_contact:24, cog
 
 const POLICIES = [
   { id:'draft_personhood_act', cat:'Legal Framework', name:'NON-SAPIENS PERSONS ACT', desc:'Grant Neanderthals and Denisovans legally recognized "Non-Sapiens Person" status with limited rights.', cost:300, effects:{rights_conflict:+15, extremism:+12, integration_score:+10}, tags:['Rights ↑↑','Integration ↑','Extremism ↑'], oneTime:true },
-  { id:'wildlife_protection', cat:'Legal Framework', name:'WILDLIFE PROTECTION ORDER', desc:'Protect Tier 3–5 species as endangered, establishing habitat corridors and legal penalties for harm.', cost:150, effects:{ecological_stress:-12, stability:+3, rights_conflict:+3}, tags:['Ecology ↓','Stability ↑'], oneTime:false },
-  { id:'species_containment_order', cat:'Legal Framework', name:'SPECIES CONTAINMENT ORDER', desc:'Mandatory residential zones for non-sapiens populations. Surface stability at the cost of civil rights and rising extremist resentment.', cost:200, effects:{rights_conflict:-25, stability:+5, extremism:+12, integration_score:-10}, tags:['Stability ↑','Rights ↓↓','Extremism ↑','Integration ↓'], oneTime:false, dark:true },
+  /* COOLDOWN SYSTEM */ { id:'wildlife_protection', cat:'Legal Framework', name:'WILDLIFE PROTECTION ORDER', desc:'Protect Tier 3–5 species as endangered, establishing habitat corridors and legal penalties for harm.', cost:150, effects:{ecological_stress:-12, stability:+3, rights_conflict:+3}, tags:['Ecology ↓','Stability ↑'], oneTime:false, cooldownTurns:1 },
+  /* COOLDOWN SYSTEM */ { id:'species_containment_order', cat:'Legal Framework', name:'SPECIES CONTAINMENT ORDER', desc:'Mandatory residential zones for non-sapiens populations. Surface stability at the cost of civil rights and rising extremist resentment.', cost:200, effects:{rights_conflict:-25, stability:+5, extremism:+12, integration_score:-10}, tags:['Stability ↑','Rights ↓↓','Extremism ↑','Integration ↓'], oneTime:false, dark:true, cooldownTurns:2 },
   { id:'interbreeding_registry', cat:'Legal Framework', name:'INTERBREEDING REGISTRY', desc:'Legal framework for sapiens/neanderthal partnerships. Unlocks after the Neanderthal-Sapiens Legal Chaos event.', cost:150, effects:{integration_score:+8, rights_conflict:+5, extremism:+8}, tags:['Integration ↑'], oneTime:true, locked:true },
-  { id:'pathogen_surveillance', cat:'Science & Medicine', name:'CROSS-SPECIES PATHOGEN SURVEILLANCE', desc:'WHO-coordinated monitoring network for inter-species disease transmission.', cost:200, effects:{disease:-10, knowledge:+10}, tags:['Disease ↓','Knowledge ↑'], oneTime:false },
+  /* COOLDOWN SYSTEM */ { id:'pathogen_surveillance', cat:'Science & Medicine', name:'CROSS-SPECIES PATHOGEN SURVEILLANCE', desc:'WHO-coordinated monitoring network for inter-species disease transmission.', cost:200, effects:{disease:-10, knowledge:+10}, tags:['Disease ↓','Knowledge ↑'], oneTime:false, cooldownTurns:2 },
   { id:'genome_mapping', cat:'Science & Medicine', name:'GENOME MAPPING PROGRAM', desc:'Comprehensive DNA analysis of all non-sapiens species. Massive one-time knowledge gain.', cost:250, effects:{knowledge:+50, disease:-5}, tags:['Knowledge ↑↑'], oneTime:true },
-  { id:'vaccination_program', cat:'Science & Medicine', name:'MASS VACCINATION DRIVE', desc:'Multi-species vaccination against common pathogens. ⚠ Ongoing cost: −80 budget/turn permanently. Ensure stable income before enacting.', cost:300, effects:{disease:-18, public_opinion:+8}, tags:['Disease ↓↓','⚠ −80/turn'], oneTime:false, requires_knowledge:20 },
+  /* COOLDOWN SYSTEM */ { id:'vaccination_program', cat:'Science & Medicine', name:'MASS VACCINATION DRIVE', desc:'Multi-species vaccination against common pathogens. ⚠ Ongoing cost: −80 budget/turn permanently. Ensure stable income before enacting. Requires 120 Knowledge.', cost:300, effects:{disease:-18, public_opinion:+8}, tags:['Disease ↓↓','⚠ −80/turn'], oneTime:false, requires_knowledge:120, cooldownTurns:3 },
   { id:'cognitive_assessment', cat:'Science & Medicine', name:'COGNITIVE ASSESSMENT STUDIES', desc:'Scientific determination of cognitive tiers, controversial but legally essential.', cost:200, effects:{knowledge:+30, rights_conflict:+8, stability:+3}, tags:['Knowledge ↑','Rights mixed'], oneTime:true },
-  { id:'de_escalation_units', cat:'Military & Security', name:'DE-ESCALATION SPECIALIST UNITS', desc:'Special forces trained specifically for non-violent contact and conflict resolution.', cost:350, effects:{stability:+8, rights_conflict:+8, extremism:-8}, tags:['Stability ↑','Rights ↑','Extremism ↓'], oneTime:false },
-  { id:'containment_zones', cat:'Military & Security', name:'NEANDERTHAL CONTAINMENT ZONES', desc:'Military perimeter around Neanderthal territories in conflict regions. Galvanises rights advocates and fuels recruitment for extremist factions.', cost:400, effects:{rights_conflict:-25, stability:+8, extremism:+10, integration_score:-12}, tags:['Stability ↑','Rights ↓↓','Extremism ↑','Integration ↓'], oneTime:false, dark:true },
-  { id:'extermination_order', cat:'Military & Security', name:'⚠ MILITARY EXTERMINATION CAMPAIGN', desc:'Authorize broad military action against non-sapiens populations in contested regions. Indiscriminate: all Tier 2+ species lose 30–50% population. Extreme diplomatic consequences.', cost:500, effects:{rights_conflict:-40, stability:-20, extremism:+25, public_opinion:-30}, tags:['CATASTROPHIC'], oneTime:false, dark:true, isDark:true },
-  { id:'language_bridge', cat:'Integration Programs', name:'LANGUAGE BRIDGE PROGRAM', desc:'Communication research with near-sapiens species. Foundation for meaningful diplomacy.', cost:200, effects:{integration_score:+12, knowledge:+20, rights_conflict:+5, extremism:-10}, tags:['Integration ↑','Knowledge ↑','Rights ↑', 'Extremism ↓' ], oneTime:false },
-  { id:'safe_harbor_cities', cat:'Integration Programs', name:'SAFE HARBOR CITIES', desc:'Designated urban zones for peaceful coexistence between sapiens and Tier 1–2 species. Requires 300 Knowledge.', cost:350, effects:{integration_score:+15, rights_conflict:+10, extremism:-20, stability:-3}, tags:['Integration ↑↑','Rights ↑', 'Extremism ↓'], oneTime:false, requires_knowledge:300 }, 
-  { id:'cultural_exchange', cat:'Integration Programs', name:'CULTURAL EXCHANGE INITIATIVE', desc:'Media and education programs highlighting non-sapiens culture and achievements. Requires 150 Knowledge.', cost:150, effects:{public_opinion:+20, integration_score:+8, extremism:-10}, tags:['Opinion ↑↑','Integration ↑', 'Extremism ↓' ], oneTime:false, requires_knowledge:150 }, 
-  { id:'who_emergency', cat:'Emergency Actions', name:'WHO EMERGENCY DECLARATION', desc:'Global health emergency response mobilizing international medical resources.', cost:400, effects:{disease:-25, stability:+5}, tags:['Disease ↓↓↓'], oneTime:false, maxUses:3 },
-  { id:'un_summit', cat:'Emergency Actions', name:'UN SPECIES SUMMIT', desc:'Convene international negotiations: major stability boost but costly.', cost:500, effects:{stability:+18, rights_conflict:+8, integration_score:+8, extremism:-40}, tags:['Stability ↑↑','Rights ↑', 'Extremism ↓↓↓'], oneTime:false, maxUses:2 },
+  /* COOLDOWN SYSTEM */ { id:'de_escalation_units', cat:'Military & Security', name:'DE-ESCALATION SPECIALIST UNITS', desc:'Special forces trained specifically for non-violent contact and conflict resolution.', cost:350, effects:{stability:+8, rights_conflict:+8, extremism:-8}, tags:['Stability ↑','Rights ↑','Extremism ↓'], oneTime:false, cooldownTurns:3 },
+  /* COOLDOWN SYSTEM */ { id:'containment_zones', cat:'Military & Security', name:'NEANDERTHAL CONTAINMENT ZONES', desc:'Military perimeter around Neanderthal territories in conflict regions. Galvanises rights advocates and fuels recruitment for extremist factions.', cost:400, effects:{rights_conflict:-25, stability:+8, extremism:+10, integration_score:-12}, tags:['Stability ↑','Rights ↓↓','Extremism ↑','Integration ↓'], oneTime:false, dark:true, cooldownTurns:3 },
+  /* COOLDOWN SYSTEM */ { id:'extermination_order', cat:'Military & Security', name:'⚠ MILITARY EXTERMINATION CAMPAIGN', desc:'Authorize broad military action against non-sapiens populations in contested regions. Indiscriminate: all Tier 2+ species lose 30–50% population. Extreme diplomatic consequences.', cost:500, effects:{rights_conflict:-40, stability:-20, extremism:+25, public_opinion:-30}, tags:['CATASTROPHIC'], oneTime:false, dark:true, isDark:true, cooldownTurns:4 },
+  /* COOLDOWN SYSTEM */ { id:'language_bridge', cat:'Integration Programs', name:'LANGUAGE BRIDGE PROGRAM', desc:'Communication research with near-sapiens species. Foundation for meaningful diplomacy.', cost:200, effects:{integration_score:+12, knowledge:+20, rights_conflict:+5, extremism:-10}, tags:['Integration ↑','Knowledge ↑','Rights ↑', 'Extremism ↓' ], oneTime:false, cooldownTurns:3 },
+  /* COOLDOWN SYSTEM */ { id:'safe_harbor_cities', cat:'Integration Programs', name:'SAFE HARBOR CITIES', desc:'Designated urban zones for peaceful coexistence between sapiens and Tier 1–2 species. Requires 300 Knowledge.', cost:350, effects:{integration_score:+15, rights_conflict:+10, extremism:-20, stability:-3}, tags:['Integration ↑↑','Rights ↑', 'Extremism ↓'], oneTime:false, requires_knowledge:300, cooldownTurns:3 }, 
+  /* COOLDOWN SYSTEM */ { id:'cultural_exchange', cat:'Integration Programs', name:'CULTURAL EXCHANGE INITIATIVE', desc:'Media and education programs highlighting non-sapiens culture and achievements. Requires 150 Knowledge.', cost:150, effects:{public_opinion:+20, integration_score:+8, extremism:-10}, tags:['Opinion ↑↑','Integration ↑', 'Extremism ↓' ], oneTime:false, requires_knowledge:150, cooldownTurns:2 }, 
+  /* COOLDOWN SYSTEM */ { id:'who_emergency', cat:'Emergency Actions', name:'WHO EMERGENCY DECLARATION', desc:'Global health emergency response mobilizing international medical resources. Requires 300 Knowledge.', cost:400, effects:{disease:-25, stability:+5}, tags:['Disease ↓↓↓'], oneTime:false, maxUses:3, cooldownTurns:3, requires_knowledge:300 },
+  /* COOLDOWN SYSTEM */ { id:'un_summit', cat:'Emergency Actions', name:'UN SPECIES SUMMIT', desc:'Convene international negotiations: major stability boost but costly. Requires 450 Knowledge.', cost:500, effects:{stability:+18, rights_conflict:+8, integration_score:+8, extremism:-40}, tags:['Stability ↑↑','Rights ↑', 'Extremism ↓↓↓'], oneTime:false, maxUses:2, cooldownTurns:4, requires_knowledge:450 },
   { id:'integration_treaty', cat:'Emergency Actions', name:'NON-SAPIENS INTEGRATION TREATY', desc:'Formal international treaty framework. Requires First Contact event.', cost:600, effects:{integration_score:+25, rights_conflict:+20, stability:+10, extremism:+15}, tags:['Integration ↑↑↑','Rights ↑↑'], oneTime:true, requires_knowledge:50, locked:true }
 ];
 
@@ -3062,7 +3062,8 @@ function createInitialState(difficulty = 'normal') {
     romanticEncounters: [], tierLowBehavior: {}, speciesHelped: {},
     dynamicEvents: [],
     dotConflictOffsets: {},
-    pendingMoves: {}
+    pendingMoves: {},
+    /* COOLDOWN SYSTEM */ policyCooldowns: {}
   };
   const preEncountered = ['neanderthal', 'denisovan', 'heidelbergensis', 'erectus'];
   SPECIES_DATA.forEach(s => {
@@ -3106,6 +3107,7 @@ function loadGame() {
     GS.lastConflict         = GS.lastConflict         || null;
     GS.dotConflictOffsets   = GS.dotConflictOffsets   || {};
     GS.pendingMoves         = GS.pendingMoves         || {};
+    /* COOLDOWN SYSTEM */ GS.policyCooldowns = GS.policyCooldowns || {};
     if (GS.lastConflict && !GS.lastConflict.winner) { GS.lastConflict.winner = GS.lastConflict.speciesA; GS.lastConflict.loser = GS.lastConflict.speciesB; GS.lastConflict.deathToll = 0; }
     GS.achievements      = GS.achievements      || []; 
     
@@ -3820,7 +3822,7 @@ function advanceTurn() {
   const budgetIncome = GS.difficulty === 'easy'       ? 250
                      : GS.difficulty === 'hard'        ? 150
                      : GS.difficulty === 'extinction'  ? 100
-                     : 200; // normal
+                     : 175; // normal
   GS.resources.budget = Math.min(700, GS.resources.budget + budgetIncome);
   if (GS.policies_enacted.includes('vaccination_program')) GS.resources.budget = Math.max(0, GS.resources.budget - 80);
   let kGain = 10;
@@ -4529,6 +4531,10 @@ function enactPolicy(id) {
     GS.meters.rights_conflict = Math.max(0, Math.min(100, GS.meters.rights_conflict + delta));
     const dir = delta > 0 ? 'improved' : 'deteriorated';
     addNews(`[COGNITIVE STUDIES] Rights situation ${dir} by ${Math.abs(delta)} — contested findings.`, delta > 0 ? 'good' : 'crisis');
+  }
+  /* COOLDOWN SYSTEM — record cooldown for repeatable policies */
+  if (p.cooldownTurns && !p.oneTime) {
+    GS.policyCooldowns[id] = GS.turn + p.cooldownTurns;
   }
   addNews(`[POLICY] ${p.name} enacted — ${p.cost} budget spent.`, 'event');
   saveGame(true);
@@ -5633,10 +5639,38 @@ function renderTurnDisplay() {
   }
 }
 
+/* COOLDOWN SYSTEM */
 function renderPolicies() {
   const c=document.getElementById('policies-container'); if(!c) return;
   const cats=[...new Set(POLICIES.map(p=>p.cat))];
-  c.innerHTML=cats.map(cat=>{
+
+  /* COOLDOWN SYSTEM — build the "no affordable" banner */
+  const visiblePolicies = POLICIES.filter(p => {
+    const locked = p.locked && !GS.unlocked_policies.includes(p.id);
+    const enacted = p.oneTime && GS.policies_enacted.includes(p.id);
+    const maxUsed = p.maxUses && (GS.policy_uses[p.id]||0) >= p.maxUses;
+    return !locked && !enacted && !maxUsed;
+  });
+  const cheapest = visiblePolicies.reduce((min,p)=>p.cost<min?p.cost:min, Infinity);
+  const allBlockedOrCooldown = visiblePolicies.length === 0 || visiblePolicies.every(p => {
+    const onCooldown = p.cooldownTurns && !p.oneTime && GS.policyCooldowns[p.id] > GS.turn;
+    return GS.resources.budget < p.cost || onCooldown;
+  });
+  let bannerHtml = '';
+  if (allBlockedOrCooldown && GS.turn_policies_used < 3) {
+    bannerHtml = `<div id="no-policy-banner" style="
+      margin-bottom:10px;padding:9px 12px;
+      background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.35);
+      font-family:var(--font-mono);font-size:11px;color:var(--accent-amber);
+      line-height:1.5;position:relative;">
+      ⚠ No affordable policies this turn. Press END TURN to continue.
+      <button onclick="document.getElementById('no-policy-banner').remove()"
+        style="position:absolute;top:5px;right:8px;background:none;border:none;
+        color:var(--text-dim);cursor:pointer;font-size:12px;line-height:1;">✕</button>
+    </div>`;
+  }
+
+  const sections = cats.map(cat=>{
     const ps=POLICIES.filter(p=>p.cat===cat);
     const cards=ps.map(p=>{
       const canAfford=GS.resources.budget>=p.cost;
@@ -5645,7 +5679,13 @@ function renderPolicies() {
       const enacted=p.oneTime&&GS.policies_enacted.includes(p.id);
       const maxUsed=p.maxUses&&(GS.policy_uses[p.id]||0)>=p.maxUses;
       const noSlots=GS.turn_policies_used>=3;
-      const disabled=!canAfford||!canKnow||locked||enacted||maxUsed;
+
+      /* COOLDOWN SYSTEM — compute cooldown state */
+      const cooldownReadyTurn = (p.cooldownTurns && !p.oneTime) ? (GS.policyCooldowns[p.id] || 0) : 0;
+      const onCooldown = cooldownReadyTurn > GS.turn;
+      const cooldownLeft = onCooldown ? cooldownReadyTurn - GS.turn : 0;
+
+      const disabled=!canAfford||!canKnow||locked||enacted||maxUsed||onCooldown;
       const tags=(p.tags||[]).map(t=>{
         const hasUp=t.includes('\u2191'), hasDown=t.includes('\u2193');
         let tcls='effect-neutral';
@@ -5655,17 +5695,40 @@ function renderPolicies() {
         else if(hasDown) tcls='effect-bad';
         return `<span class="effect-tag ${tcls}">${t}</span>`;
       }).join('');
+
+      /* COOLDOWN SYSTEM — badge logic, cooldown takes priority display */
       let badge='';
-      if(enacted)badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--accent-green)">✓ ENACTED</span>`;
-      else if(locked)badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">🔒 LOCKED</span>`;
-      else if(maxUsed)badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">MAX USED</span>`;
-      else if(!canAfford)badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-crisis)">NEED ${p.cost}</span>`;
-      return `<div class="policy-card${disabled||noSlots?' disabled':''}${p.dark?' dark-card':''}" onclick="${disabled||noSlots?'':'enactPolicy(\''+p.id+'\')'}">
-        <div class="policy-name">${p.name}</div><div class="policy-desc">${p.desc}</div>
+      if(enacted) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--accent-green)">✓ ENACTED</span>`;
+      else if(locked) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">🔒 LOCKED</span>`;
+      else if(maxUsed) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">MAX USED</span>`;
+      else if(!canAfford) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-crisis)">NEED ${p.cost}</span>`;
+
+      /* COOLDOWN SYSTEM — cooldown badge shown below policy name */
+      const cooldownBadge = onCooldown
+        ? `<div style="font-family:var(--font-mono);font-size:11px;
+            color:#b89a50;background:rgba(20,16,8,0.75);
+            border:1px solid rgba(180,140,60,0.35);
+            display:inline-block;padding:2px 7px;margin-top:4px;margin-bottom:2px;
+            letter-spacing:0.5px;">
+            ⏳ Available in ${cooldownLeft} turn${cooldownLeft!==1?'s':''}
+          </div>`
+        : '';
+
+      /* COOLDOWN SYSTEM — grey-out button style when on cooldown */
+      const btnStyle = onCooldown
+        ? 'style="opacity:0.4;cursor:not-allowed;pointer-events:none;"'
+        : '';
+
+      return `<div class="policy-card${disabled||noSlots?' disabled':''}${p.dark?' dark-card':''}" ${btnStyle} onclick="${disabled||noSlots?'':'enactPolicy(\''+p.id+'\')'}">
+        <div class="policy-name">${p.name}</div>
+        ${cooldownBadge}
+        <div class="policy-desc">${p.desc}</div>
         <div class="policy-footer"><span class="policy-cost">💰 ${p.cost}</span><div class="policy-effects">${tags}</div>${badge}</div></div>`;
     }).join('');
     return `<div class="policy-section"><div class="policy-section-title">${cat}</div>${cards}</div>`;
   }).join('');
+
+  c.innerHTML = bannerHtml + sections;
 }
 
 function renderSpeciesList() {
