@@ -497,6 +497,90 @@ canvas { touch-action: none; }
 .onboarding-tip.row3::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(to bottom, var(--accent-green), var(--accent-red)); }
 .onboarding-tip.row3 strong { color:var(--accent-green); }
 .onboarding-tip.row3 .row3-warn { color:var(--text-crisis); font-weight:700; }
+
+/* CHANGE 1C — Mutual exclusion blocked policy */
+.policy-blocked { opacity: 0.4; filter: grayscale(0.7); pointer-events: none; }
+
+/* DECISION LOG */
+#tab-log .log-entry { font-family: var(--font-mono); font-size: 11px;
+  padding: 6px 0; border-bottom: 1px solid rgba(30,58,95,0.3);
+  line-height: 1.5; }
+#tab-log .log-turn { color: var(--accent-amber); font-size: 9px;
+  letter-spacing: 1px; }
+#tab-log .log-event { color: var(--text-primary); margin: 1px 0; }
+#tab-log .log-choice { color: var(--text-dim); font-size: 10px;
+  padding-left: 8px; border-left: 2px solid rgba(245,166,35,0.3); }
+#tab-log .log-empty { color: var(--text-dim); font-size: 11px;
+  text-align: center; padding: 20px; }
+
+/* EXTINCTION CASCADE WARNING */
+.extinction-warning {
+  display: inline-block; margin-left: 4px;
+  font-family: var(--font-mono); font-size: 9px;
+  color: var(--text-crisis); border: 1px solid var(--text-crisis);
+  padding: 1px 4px; animation: pulse-txt 1s infinite;
+  letter-spacing: 0.5px; }
+
+/* INTEGRATION MILESTONE */
+.integration-milestone-flash {
+  animation: milestone-glow 1.5s ease forwards; }
+@keyframes milestone-glow {
+  0%   { box-shadow: 0 0 0 rgba(39,174,96,0); }
+  40%  { box-shadow: 0 0 22px rgba(39,174,96,0.6); }
+  100% { box-shadow: 0 0 0 rgba(39,174,96,0); }
+}
+
+/* SPECIES DETAIL MODAL (map click / right-panel click) */
+#species-detail-modal {
+  position: fixed; inset: 0; background: rgba(5,9,16,0.92);
+  display: none; z-index: 1500; align-items: center;
+  justify-content: center; backdrop-filter: blur(4px); padding: 20px; }
+#species-detail-modal.open { display: flex; }
+.species-detail-card {
+  background: var(--bg-panel); max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  border: 1px solid var(--border-bright);
+  box-shadow: 0 0 60px rgba(41,128,185,0.15);
+  animation: modal-in 0.3s ease; }
+.sdm-header {
+  padding: 22px 26px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 16px; }
+.sdm-emoji { font-size: 38px; flex-shrink: 0; }
+.sdm-title-block { flex: 1; }
+.sdm-name { font-family: var(--font-display); font-size: 22px;
+  font-weight: 700; }
+.sdm-nickname { font-family: var(--font-mono); font-size: 10px;
+  color: var(--text-dim); letter-spacing: 2px; margin-top: 2px; }
+.sdm-close { font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-dim); cursor: pointer; padding: 4px 8px;
+  border: 1px solid var(--border); flex-shrink: 0; }
+.sdm-close:hover { color: var(--text-primary); border-color: var(--border-bright); }
+.sdm-body { padding: 18px 26px; }
+.sdm-stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  margin-bottom: 14px; }
+.sdm-stat { display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 11px;
+  padding: 4px 0; border-bottom: 1px solid rgba(30,58,95,0.3); }
+.sdm-stat-label { color: var(--text-dim); }
+.sdm-stat-val { color: var(--accent-amber); }
+.sdm-pop-bar { height: 7px; background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border); overflow: hidden; margin-bottom: 14px; }
+.sdm-pop-fill { height: 100%; transition: width 0.6s ease; }
+.sdm-trend { font-family: var(--font-mono); font-size: 11px;
+  margin-bottom: 10px; }
+.sdm-trend-up { color: var(--accent-green); }
+.sdm-trend-down { color: var(--text-crisis); }
+.sdm-trend-flat { color: var(--text-dim); }
+.sdm-traits { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 14px; }
+.sdm-lore { font-size: 13px; color: #a8b8cc; line-height: 1.85;
+  border-top: 1px solid var(--border); padding-top: 12px; }
+.sdm-status-bar { font-family: var(--font-mono); font-size: 10px;
+  padding: 8px 12px; margin-bottom: 14px;
+  border: 1px solid var(--border); }
+.sdm-extinct-notice { color: var(--text-crisis); font-family: var(--font-mono);
+  font-size: 11px; padding: 8px 12px; border: 1px solid var(--text-crisis);
+  margin-bottom: 14px; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -559,6 +643,7 @@ canvas { touch-action: none; }
     </div>
     <div class="top-actions">
       <button class="btn btn-green btn-small" onclick="manualSave()">💾 SAVE</button>
+      <button class="btn btn-secondary btn-small" onclick="openDecisionLogModal()">📋 LOG</button>
       <button class="btn btn-secondary btn-small" onclick="showScreen('title-screen')">✕ EXIT</button>
     </div>
   </div>
@@ -736,6 +821,35 @@ canvas { touch-action: none; }
       <button class="btn btn-primary btn-small" onclick="importSaveData()">IMPORT</button>
       <button class="btn btn-secondary btn-small" onclick="closeModal('import-modal')">CANCEL</button>
     </div>
+  </div>
+</div>
+
+<!-- DECISION LOG MODAL -->
+<div id="decision-log-modal" class="overlay-modal">
+  <div class="modal-card" style="max-width:520px;max-height:80vh;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0">
+      <div>
+        <div class="modal-title" style="font-size:18px">DECISION LOG</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;margin-top:2px">LAST 10 CHOICES</div>
+      </div>
+      <div class="sdm-close" onclick="closeDecisionLogModal()">✕ CLOSE</div>
+    </div>
+    <div id="decision-log-body" style="overflow-y:auto;flex:1;"></div>
+  </div>
+</div>
+
+<!-- SPECIES DETAIL MODAL -->
+<div id="species-detail-modal">
+  <div class="species-detail-card" id="sdm-card">
+    <div class="sdm-header">
+      <div class="sdm-emoji" id="sdm-emoji"></div>
+      <div class="sdm-title-block">
+        <div class="sdm-name" id="sdm-name"></div>
+        <div class="sdm-nickname" id="sdm-nickname"></div>
+      </div>
+      <div class="sdm-close" onclick="closeSpeciesDetailModal()">✕ CLOSE</div>
+    </div>
+    <div class="sdm-body" id="sdm-body"></div>
   </div>
 </div>
 
@@ -3067,7 +3181,9 @@ function createInitialState(difficulty = 'normal') {
     dynamicEvents: [],
     dotConflictOffsets: {},
     pendingMoves: {},
-    /* COOLDOWN SYSTEM */ policyCooldowns: {}
+    /* COOLDOWN SYSTEM */ policyCooldowns: {},
+    decisionLog: [],
+    integrationMilestonesSeen: []
   };
   const preEncountered = ['neanderthal', 'denisovan', 'heidelbergensis', 'erectus'];
   SPECIES_DATA.forEach(s => {
@@ -3232,6 +3348,7 @@ function initGameScreen() {
           addNews(`[DETECTED] ${sd.name} population confirmed via field contact.`, 'event');
           renderAll(); updateLegend();
         }
+        openSpeciesDetailModal(id);
         break;
       }
     }
@@ -3247,6 +3364,7 @@ function initGameScreen() {
           addNews(`[DETECTED] ${sd.name} population confirmed via field contact.`, 'event');
           renderAll(); updateLegend();
         }
+        openSpeciesDetailModal(edp.speciesId);
         break;
       }
     }
@@ -3848,10 +3966,15 @@ function advanceTurn() {
     });
   }
   const mult = GS.diffMult || 1.0;
-  const budgetIncome = GS.difficulty === 'easy'       ? 250
-                     : GS.difficulty === 'hard'        ? 100
-                     : GS.difficulty === 'extinction'  ? 50
-                     : 125; // normal
+  // CHANGE 6 — Dynamic budget income: Opinion + Knowledge scale income up to difficulty cap
+  const maxBudgetIncome = GS.difficulty === 'easy'       ? 250
+                        : GS.difficulty === 'hard'        ? 100
+                        : GS.difficulty === 'extinction'  ? 50
+                        : 125; // normal
+  const opinionFactor   = Math.min(GS.resources.public_opinion, 100) / 100;
+  const knowledgeFactor = Math.min(GS.resources.knowledge, 500) / 500;
+  const incomeMultiplier = Math.max(0.2, (opinionFactor * 0.6) + (knowledgeFactor * 0.4));
+  const budgetIncome = Math.round(maxBudgetIncome * incomeMultiplier);
   GS.resources.budget = Math.min(700, GS.resources.budget + budgetIncome);
   if (GS.policies_enacted.includes('vaccination_program')) GS.resources.budget = Math.max(0, GS.resources.budget - 80);
   let kGain = 10;
@@ -3861,7 +3984,12 @@ function advanceTurn() {
   m.stability = clamp(m.stability - (m.extremism > 60 ? 2 : 0) - (m.rights_conflict < 30 ? 1.5 : 0) + (GS.policies_enacted.includes('de_escalation_units') ? 0.5 : 0), 0, 100);
   
   const knowledgeDiseaseReduction = Math.min(0.4, GS.resources.knowledge / 2500);
-  m.disease = clamp(m.disease + (m.disease < 30 ? 0.5 : 1.0) * mult
+  // CHANGE 5 — Eco stress amplifies disease growth rate
+  const ecoDiseaseMod = m.ecological_stress > 75 ? 1.5
+                      : m.ecological_stress > 50 ? 1.2
+                      : m.ecological_stress > 25 ? 1.0
+                      : 0.8;
+  m.disease = clamp(m.disease + (m.disease < 30 ? 0.5 : 1.0) * mult * ecoDiseaseMod
     - (GS.policies_enacted.includes('vaccination_program') ? 1.5 : 0)
     - (GS.policies_enacted.includes('pathogen_surveillance') ? 0.8 : 0)
     - knowledgeDiseaseReduction, 0, 100);
@@ -3913,11 +4041,39 @@ function advanceTurn() {
   if (GS.policies_enacted.includes('language_bridge')) GS.integration_score = clamp(GS.integration_score + 0.5, 0, 100);
   if (GS.policies_enacted.includes('safe_harbor_cities')) GS.integration_score = clamp(GS.integration_score + 0.5, 0, 100);
   if (GS.policies_enacted.includes('cultural_exchange')) GS.integration_score = clamp(GS.integration_score + 0.3, 0, 100);
-  
+
+  const INTEGRATION_MILESTONES = [
+    { val: 20, label: 'FIRST CONTACT FORMALIZED', msg: 'Integration Score 20 — First formal non-sapiens diplomatic contacts documented globally.' },
+    { val: 40, label: 'RIGHTS FRAMEWORK EMERGING', msg: 'Integration Score 40 — A majority of UN member states have adopted basic non-sapiens welfare standards.' },
+    { val: 60, label: 'COEXISTENCE ACHIEVED', msg: 'Integration Score 60 — Non-sapiens communities are legally recognized in 40+ nations.' },
+    { val: 75, label: 'DEEP INTEGRATION', msg: 'Integration Score 75 — Interspecies economic and cultural exchange is self-sustaining.' },
+    { val: 100, label: 'HOMININ HARMONY', msg: 'Integration Score 100 — Full integration achieved. History records this moment.' },
+  ];
+  if (!GS.integrationMilestonesSeen) GS.integrationMilestonesSeen = [];
+  INTEGRATION_MILESTONES.forEach(m2 => {
+    if (GS.integration_score >= m2.val && !GS.integrationMilestonesSeen.includes(m2.val)) {
+      GS.integrationMilestonesSeen.push(m2.val);
+      addNews(`★ MILESTONE: ${m2.label} — ${m2.msg}`, 'good');
+      showAchievement(m2.label, m2.msg);
+      // Flash the integration meter
+      const el = document.getElementById('mi-integration') ??
+        document.querySelector('.meter-rights');
+      if (el) {
+        el.classList.add('integration-milestone-flash');
+        setTimeout(() => el.classList.remove('integration-milestone-flash'), 1600);
+      }
+    }
+  });
+
   if (GS.integration_score >= 90 && m.rights_conflict < 60 && !GS._hintedRightsWall) {
     GS._hintedRightsWall = true;
     addNews('⚑ INTEGRATION AT 90% but the rights movement needs to reach 75% for Hominini Harmony. Choose rights-affirming responses to push it higher.', 'event');
   }
+  // Snapshot pops for trend arrows in tooltips
+  if (!GS.prevPops) GS.prevPops = {};
+  SPECIES_DATA.forEach(sd => {
+    if (GS.species[sd.id]) GS.prevPops[sd.id] = GS.species[sd.id].population ?? 0;
+  });
   SPECIES_DATA.forEach(sd => {
     if (sd.id === 'sapiens') return;
     const sp = GS.species[sd.id];
@@ -3952,7 +4108,19 @@ function advanceTurn() {
       else sp.status = 'stable';
     }
   });
-  
+
+  // Track extinction countdown warnings
+  SPECIES_DATA.filter(sd => sd.id !== 'sapiens').forEach(sd => {
+    const sp = GS.species[sd.id];
+    if (!sp || sp.extinct) return;
+    const pct = sp.population / sd.maxPop;
+    if (pct < 0.05 && !sp.extinctionWarned) {
+      sp.extinctionWarned = true;
+      addNews(`⚠ ${sd.name} population critical — extinction imminent without intervention.`, 'crisis');
+    }
+    if (pct >= 0.10) sp.extinctionWarned = false; // reset if they recover
+  });
+
   if (m.stability <= 10 && m.stability > 0 && !GS._warnedLowStability) {
     GS._warnedLowStability = true;
     addNews('⚠ CRITICAL: STABILITY BELOW 10%  CIVILIZATIONAL COLLAPSE IMMINENT. YOUR SAVE WILL BE WIPED.', 'crisis');
@@ -4149,17 +4317,21 @@ function checkLegalFrameworkTriggers() {
   if (policies.includes('wildlife_protection')) {
     if (Math.random() < triggerChance) {
       const wpoId = 'lf_wpo_ecosystem_disruption';
-      const ev = EVENTS.find(e => e.id === wpoId);
-      if (ev && !eventQueue.find(e => e.id === wpoId)
-             && !GS.pendingEvents?.some(pe => pe.eventId === wpoId)) {
-        if (!GS.pendingEvents) GS.pendingEvents = [];
-        GS.pendingEvents.push({ eventId: wpoId, fireOnTurn: GS.turn + 1 });
+      // CHANGE 4 — Only trigger when WPO active AND SCO is NOT active
+      if (!policies.includes('species_containment_order')) {
+        const ev = EVENTS.find(e => e.id === wpoId);
+        if (ev && !eventQueue.find(e => e.id === wpoId)
+               && !GS.pendingEvents?.some(pe => pe.eventId === wpoId)) {
+          if (!GS.pendingEvents) GS.pendingEvents = [];
+          GS.pendingEvents.push({ eventId: wpoId, fireOnTurn: GS.turn + 1 });
+        }
       }
     }
   }
 
   
-  if (policies.includes('species_containment_order')) {
+  // CHANGE 2A/3A — SCO escape events only fire when SCO active (and WPO not active)
+  if (policies.includes('species_containment_order') && !policies.includes('wildlife_protection')) {
     if (Math.random() < triggerChance) {
       const evId = Math.random() < 0.50 ? 'lf_sco_escape_attempt_low' : 'lf_sco_escape_high';
       const ev = EVENTS.find(e => e.id === evId);
@@ -4348,6 +4520,40 @@ function showNextEvent() {
 }
 
 function renderEventModal(ev) {
+  // CHANGE 2B — Inject random Tier 1-2 species name into escape attempt low event
+  if (ev.id === 'lf_sco_escape_attempt_low') {
+    const tier12 = SPECIES_DATA.filter(s =>
+      [1, 2].includes(s.cognitiveLevel) &&
+      s.id !== 'sapiens' &&
+      GS.species[s.id] &&
+      !GS.species[s.id].extinct
+    );
+    if (tier12.length > 0) {
+      const picked = tier12[Math.floor(Math.random() * tier12.length)];
+      ev = { ...ev }; // shallow clone — do NOT mutate original
+      ev.desc = ev.desc.replace(
+        'A Tier 1 or 2 species under the Species Containment Order',
+        `The ${picked.name} species under the Species Containment Order`
+      );
+    }
+  }
+  // CHANGE 3B — Inject random Tier 3-4-5 species name into escape high event
+  if (ev.id === 'lf_sco_escape_high') {
+    const tier345 = SPECIES_DATA.filter(s =>
+      [3, 4, 5].includes(s.cognitiveLevel) &&
+      s.id !== 'sapiens' &&
+      GS.species[s.id] &&
+      !GS.species[s.id].extinct
+    );
+    if (tier345.length > 0) {
+      const picked = tier345[Math.floor(Math.random() * tier345.length)];
+      ev = { ...ev }; // shallow clone — do NOT mutate original
+      ev.desc = ev.desc.replace(
+        'Multiple individuals from a Tier 3, 4, or 5 species',
+        `Multiple individuals from the ${picked.name} species`
+      );
+    }
+  }
   const sd = ev.species ? (SPECIES_DATA.find(s => s.id === ev.species) || null) : null;
   const isExtinction = ev.id?.startsWith('extinction_');
   const catCls = ev.cat?.includes('DARK')||isExtinction?'crisis':ev.cat==='INTEGRATION BREAKTHROUGH'?'good':'';
@@ -4403,6 +4609,13 @@ function resolveEvent(idx) {
   const choice = ev.choices[idx];
   
   if (!GS.events_seen.includes(ev.id)) GS.events_seen.push(ev.id);
+  if (!GS.decisionLog) GS.decisionLog = [];
+  GS.decisionLog.unshift({
+    turn: GS.turn,
+    event: ev.title,
+    choice: choice.text.substring(0, 80) + (choice.text.length > 80 ? '\u2026' : '')
+  });
+  if (GS.decisionLog.length > 60) GS.decisionLog.pop(); // cap at 60 entries
   // Apply budget overdraft penalty if player couldn't afford the choice
   const choiceCost = (choice.effects?.budget < 0) ? Math.abs(choice.effects.budget) : 0;
   if (choiceCost > 0 && GS.resources.budget < choiceCost) {
@@ -4553,6 +4766,22 @@ function enactPolicy(id) {
     if (!confirm('⚠ BUDGET WARNING: Your current budget is low. The Vaccination Program costs −80 per turn indefinitely. You may not be able to afford emergency actions. Proceed anyway?')) return;
   }
   
+  // CHANGE 1A — WPO ↔ SCO toggle: active policy is locked; enacting opposite switches them
+  if ((id === 'wildlife_protection' && GS.policies_enacted.includes('wildlife_protection')) ||
+      (id === 'species_containment_order' && GS.policies_enacted.includes('species_containment_order'))) {
+    addNews('This policy is already active. Enact the opposing policy to switch.', 'crisis');
+    AudioEngine.sfxPolicyBlocked();
+    return;
+  }
+  if (id === 'wildlife_protection' && GS.policies_enacted.includes('species_containment_order')) {
+    GS.policies_enacted.splice(GS.policies_enacted.indexOf('species_containment_order'), 1);
+    addNews('Species Containment Order reversed. Switching to Wildlife Protection Order.', 'good');
+  }
+  if (id === 'species_containment_order' && GS.policies_enacted.includes('wildlife_protection')) {
+    GS.policies_enacted.splice(GS.policies_enacted.indexOf('wildlife_protection'), 1);
+    addNews('Wildlife Protection Order reversed. Switching to Species Containment Order.', 'crisis');
+  }
+
   if (p.isDark || p.id === 'extermination_order') AudioEngine.sfxDarkPolicy();
   else AudioEngine.sfxPolicySuccess();
   GS.resources.budget -= p.cost;
@@ -5743,7 +5972,15 @@ function renderPolicies() {
       const onCooldown = cooldownReadyTurn > GS.turn;
       const cooldownLeft = onCooldown ? cooldownReadyTurn - GS.turn : 0;
 
-      const disabled=!canAfford||!canKnow||locked||enacted||maxUsed||onCooldown;
+      // CHANGE 1B — Active WPO/SCO greys itself out; opposite becomes available to switch
+      const isWpoBlocked = p.id === 'wildlife_protection'
+        && GS.policies_enacted.includes('wildlife_protection');
+      const isScoBlocked = p.id === 'species_containment_order'
+        && GS.policies_enacted.includes('species_containment_order');
+      const isPolicyBlocked = isWpoBlocked || isScoBlocked;
+      const blockedLabel = isWpoBlocked ? 'ACTIVE: enact SCO to switch' : 'ACTIVE:enact WPO to switch';
+
+      const disabled=!canAfford||!canKnow||locked||enacted||maxUsed||onCooldown||isPolicyBlocked;
       const tags=(p.tags||[]).map(t=>{
         const hasUp=t.includes('\u2191'), hasDown=t.includes('\u2193');
         let tcls='effect-neutral';
@@ -5756,7 +5993,8 @@ function renderPolicies() {
 
       /* COOLDOWN SYSTEM — badge logic, cooldown takes priority display */
       let badge='';
-      if(enacted) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--accent-green)">✓ ENACTED</span>`;
+      if(isPolicyBlocked) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-crisis)">${blockedLabel}</span>`;
+      else if(enacted) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--accent-green)">✓ ENACTED</span>`;
       else if(locked) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">🔒 LOCKED</span>`;
       else if(maxUsed) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">MAX USED</span>`;
       else if(!canAfford) badge=`<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-crisis)">NEED ${p.cost}</span>`;
@@ -5772,12 +6010,12 @@ function renderPolicies() {
           </div>`
         : '';
 
-      /* COOLDOWN SYSTEM — grey-out button style when on cooldown */
-      const btnStyle = onCooldown
+      /* COOLDOWN SYSTEM / CHANGE 1B — grey-out button style when on cooldown or policy blocked */
+      const btnStyle = (onCooldown || isPolicyBlocked)
         ? 'style="opacity:0.4;cursor:not-allowed;pointer-events:none;"'
         : '';
 
-      return `<div class="policy-card${disabled||noSlots?' disabled':''}${p.dark?' dark-card':''}" ${btnStyle} onclick="${disabled||noSlots?'':'enactPolicy(\''+p.id+'\')'}">
+      return `<div class="policy-card${disabled||noSlots?' disabled':''}${isPolicyBlocked?' policy-blocked':''}${p.dark?' dark-card':''}" ${btnStyle} onclick="${disabled||noSlots||isPolicyBlocked?'':'enactPolicy(\''+p.id+'\')'}">
         <div class="policy-name">${p.name}</div>
         ${cooldownBadge}
         <div class="policy-desc">${p.desc}</div>
@@ -5803,14 +6041,16 @@ function renderSpeciesList() {
       }
       const pop=sp.extinct?0:sp.population;
       const pct=Math.min(100,(pop/sd.maxPop)*100);
-      return `<div class="species-row" onclick="showSpeciesTooltip(event,'${sd.id}')">
+      const cascadeWarn = !sp.extinct && (pop / sd.maxPop) < 0.05
+        ? `<span class="extinction-warning">CRITICAL</span>` : '';
+      return `<div class="species-row" onclick="openSpeciesDetailModal('${sd.id}')">
         <div class="species-emoji">${sd.emoji}</div>
         <div class="species-info">
           <div class="species-name-small" style="color:${sd.color}">${sd.name.split(' ')[0]+' '+(sd.name.split(' ')[1]||'')}</div>
           <div class="species-pop">${sp.extinct?'EXTINCT':pop.toLocaleString()}</div>
           <div class="species-pop-bar"><div class="species-pop-fill" style="width:${pct}%;background:${sd.color}"></div></div>
         </div>
-        <div class="species-status-tag status-${sp.status}">${sp.extinct?'EXT':sp.status.substring(0,5).toUpperCase()}</div>
+        <div class="species-status-tag status-${sp.status}">${sp.extinct?'EXT':sp.status.substring(0,5).toUpperCase()}</div>${cascadeWarn}
       </div>`;
     }).join('');
 }
@@ -5874,7 +6114,28 @@ function renderIntel() {
         <div style="padding:3px 0">Public Opinion Shapes Extremism directly: High opinion suppresses it, Low opinion feeds it. Watch both.</div>
       </div>
     </div>`;
-} 
+}
+
+function openDecisionLogModal() {
+  const modal = document.getElementById('decision-log-modal');
+  const c = document.getElementById('decision-log-body');
+  if (!c) return;
+  if (!GS || !GS.decisionLog || GS.decisionLog.length === 0) {
+    c.innerHTML = '<div class="log-empty">No decisions recorded yet.<br>Events will appear here as you play.</div>';
+  } else {
+    const recent = GS.decisionLog.slice(0, 10);
+    c.innerHTML = recent.map(d => `
+      <div class="log-entry">
+        <div class="log-turn">T${d.turn} \u2014 ${MONTHS[d.turn % 12]} ${2026 + Math.floor(d.turn / 12)}</div>
+        <div class="log-event">${d.event.substring(0, 55)}${d.event.length > 55 ? '\u2026' : ''}</div>
+        <div class="log-choice">\u25b6 ${d.choice}</div>
+      </div>`).join('');
+  }
+  modal.classList.add('open');
+}
+function closeDecisionLogModal() {
+  document.getElementById('decision-log-modal').classList.remove('open');
+}
 
 function renderCodex() {
   const grid=document.getElementById('codex-grid'); if(!grid) return;
@@ -5917,14 +6178,135 @@ function renderCodex() {
 
 let tipTimer=null;
 function showSpeciesTooltip(e, id) {
-  const sd=SPECIES_DATA.find(s=>s.id===id); if(!sd) return;
-  const tip=document.getElementById('tooltip');
-  tip.innerHTML=`<div class="tooltip-name">${sd.emoji} ${sd.name}</div>${sd.lore.substring(0,220)}...`;
-  tip.style.display='block';
-  tip.style.left=Math.min(e.clientX+14, window.innerWidth-290)+'px';
-  tip.style.top=(e.clientY-20)+'px';
-  clearTimeout(tipTimer); tipTimer=setTimeout(()=>{tip.style.display='none';},4500);
+  const sd = SPECIES_DATA.find(s => s.id === id);
+  if (!sd) return;
+  const sp = GS?.species?.[id];
+  const pop = sp?.extinct ? 0 : (sp?.population ?? sd.startPop);
+  const prev = GS?.prevPops?.[id] ?? pop;
+  const diff = pop - prev;
+  const trendSymbol = diff > 500 ? '\u25b2' : diff < -500 ? '\u25bc' : '\u2014';
+  const trendClass = diff > 500 ? 'sdm-trend-up' : diff < -500 ? 'sdm-trend-down' : 'sdm-trend-flat';
+  const tierLabel = ['Tier 0 (Sapiens)','Tier 1 (High Cog)','Tier 2 (Medium Cog)',
+    'Tier 3 (Low Cog)','Tier 4 (Proto)','Tier 5 (Primitive)'][sd.cognitiveLevel] ?? 'Unknown';
+  const behaviorTag = GS?.tierLowBehavior?.[id]
+    ? `<span style="color:var(--text-crisis)">[${GS.tierLowBehavior[id].toUpperCase()}]</span> ` : '';
+  const tip = document.getElementById('tooltip');
+  tip.innerHTML = `
+    <div class="tooltip-name">${sd.emoji} ${sd.name} ${behaviorTag}</div>
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);
+      letter-spacing:1px;margin-bottom:6px">${tierLabel} \u00b7 ${sd.nickname}</div>
+    <div style="font-family:var(--font-mono);font-size:10px;margin-bottom:4px">
+      Pop: <span style="color:var(--accent-amber)">${sp?.extinct ? 'EXTINCT' : pop.toLocaleString()}</span>
+      <span class="${trendClass}" style="margin-left:6px">${trendSymbol}${Math.abs(diff).toLocaleString()}</span>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);margin-bottom:6px">
+      Threat ${sd.threat}/10 \u00b7 Integration ${sd.integrationPotential}/10 \u00b7
+      Breeds w/Sapiens: ${sd.breedCompat ? 'Yes' : 'No'}
+    </div>
+    ${sd.lore.substring(0, 160)}\u2026
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--accent-amber);
+      margin-top:6px">Click for full profile \u2192</div>`;
+  tip.style.display = 'block';
+  tip.style.left = Math.min(e.clientX + 14, window.innerWidth - 310) + 'px';
+  tip.style.top = (e.clientY - 20) + 'px';
+  clearTimeout(tipTimer);
+  tipTimer = setTimeout(() => tip.style.display = 'none', 5000);
 }
+
+function openSpeciesDetailModal(id) {
+  const sd = SPECIES_DATA.find(s => s.id === id);
+  if (!sd) return;
+  const sp = GS?.species?.[id];
+  const pop = sp?.extinct ? 0 : (sp?.population ?? sd.startPop);
+  const prev = GS?.prevPops?.[id] ?? pop;
+  const diff = pop - prev;
+  const trendSymbol = diff > 500 ? '▲' : diff < -500 ? '▼' : '—';
+  const trendClass = diff > 500 ? 'sdm-trend-up' : diff < -500 ? 'sdm-trend-down' : 'sdm-trend-flat';
+  const pct = Math.min(100, (pop / sd.maxPop) * 100);
+  const tierLabels = ['Tier 0','Tier 1','Tier 2','Tier 3','Tier 4','Tier 5'];
+  const tierLabel = tierLabels[sd.cognitiveLevel] ?? 'Unknown';
+  const behavior = GS?.tierLowBehavior?.[id] ?? null;
+  const activePolicies = (GS?.policies_enacted ?? []);
+
+  // Build status context line
+  let statusLine = '';
+  if (sp?.extinct) {
+    statusLine = `<div class="sdm-extinct-notice">
+      ☠ EXTINCT — Turn ${sp.extinctOnTurn ?? '?'}<br>
+      <span style="color:var(--text-dim)">${sp.extinctContext ?? 'Cause unknown.'}</span>
+    </div>`;
+  } else if (sp?.status === 'integrated') {
+    statusLine = `<div class="sdm-status-bar" style="color:var(--accent-green);border-color:var(--accent-green)">
+      ✓ INTEGRATED — Active in coexistence zones</div>`;
+  } else if (pct < 5) {
+    statusLine = `<div class="sdm-status-bar" style="color:var(--text-crisis);border-color:var(--text-crisis)">
+      ⚠ CRITICALLY ENDANGERED — Extinction imminent</div>`;
+  } else if (behavior === 'hostile') {
+    statusLine = `<div class="sdm-status-bar" style="color:var(--text-crisis);border-color:var(--text-crisis)">
+      ⚠ HOSTILE BEHAVIOR DOCUMENTED</div>`;
+  }
+
+  // Policy flags affecting this species
+  const policyFlags = [];
+  if (activePolicies.includes('species_containment_order'))
+    policyFlags.push(`<span style="color:var(--text-crisis)">Under Species Containment Order</span>`);
+  if (activePolicies.includes('wildlife_protection'))
+    policyFlags.push(`<span style="color:var(--accent-green)">Protected — Wildlife Protection Order</span>`);
+
+  document.getElementById('sdm-emoji').textContent = sd.emoji;
+  document.getElementById('sdm-name').textContent = sd.name;
+  document.getElementById('sdm-name').style.color = sd.color;
+  document.getElementById('sdm-nickname').textContent = `"${sd.nickname}"`;
+
+  document.getElementById('sdm-body').innerHTML = `
+    ${statusLine}
+    <div class="sdm-pop-bar">
+      <div class="sdm-pop-fill" style="width:${pct}%;background:${sd.color}"></div>
+    </div>
+    <div class="sdm-stats-grid">
+      <div class="sdm-stat"><span class="sdm-stat-label">Population</span>
+        <span class="sdm-stat-val">${sp?.extinct ? 'EXTINCT' : pop.toLocaleString()}</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Max Population</span>
+        <span class="sdm-stat-val">${sd.maxPop.toLocaleString()}</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Cognitive Tier</span>
+        <span class="sdm-stat-val">${tierLabel}</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Threat Level</span>
+        <span class="sdm-stat-val">${sd.threat}/10</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Integration Pot.</span>
+        <span class="sdm-stat-val">${sd.integrationPotential}/10</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Breeds w/Sapiens</span>
+        <span class="sdm-stat-val">${sd.breedCompat ? 'Yes' : 'No'}</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Home Region</span>
+        <span class="sdm-stat-val">${sd.regions[0].replace(/-/g,' ').toUpperCase()}</span></div>
+      <div class="sdm-stat"><span class="sdm-stat-label">Pop Trend</span>
+        <span class="sdm-stat-val ${trendClass}">${trendSymbol} ${Math.abs(diff).toLocaleString()}</span></div>
+    </div>
+    <div class="sdm-trend">
+      ${policyFlags.length ? policyFlags.join(' &nbsp;|&nbsp; ') : '<span style="color:var(--text-dim)">No active policies targeting this species</span>'}
+    </div>
+    <div class="sdm-traits">
+      ${sd.traits.map(t => `<span class="trait-tag">${t.replace(/-/g,' ')}</span>`).join('')}
+    </div>
+    <div class="sdm-lore">${sd.lore}</div>`;
+
+  document.getElementById('species-detail-modal').classList.add('open');
+}
+
+function closeSpeciesDetailModal() {
+  document.getElementById('species-detail-modal').classList.remove('open');
+}
+
+// Close species detail modal on backdrop click
+document.getElementById('species-detail-modal')
+  .addEventListener('click', function(e) {
+    if (e.target === this) closeSpeciesDetailModal();
+  });
+
+// Close decision log modal on backdrop click
+document.getElementById('decision-log-modal')
+  .addEventListener('click', function(e) {
+    if (e.target === this) closeDecisionLogModal();
+  });
 
 function showSpeciesSelect() {
   if (!GS) GS=createInitialState();
@@ -6449,6 +6831,8 @@ window.addEventListener('load', () => {
       isEventModalOpen = false; /* END TURN FIX */
       ['save-modal','import-modal'].forEach(id=>closeModal(id));
       document.getElementById('tooltip').style.display='none';
+      closeSpeciesDetailModal();
+      closeDecisionLogModal();
     }
   });
   
