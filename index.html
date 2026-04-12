@@ -1451,9 +1451,9 @@ const EVENTS = [
       { text:'Conduct preliminary talks without formal recognition', effects:{integration_score:+10, stability:+5}, unlock:'integration_treaty' },
       { text:'Decline and classify as territorial dispute', effects:{stability:-10, extremism:+10, rights_conflict:-10, integration_score:-5} }
     ]},
-  { id:'hybrid_birth', cat:'INTEGRATION BREAKTHROUGH', title:'FIRST CONFIRMED NEANDERTHAL-SAPIENS HYBRID BIRTH',
-    species:'neanderthal', region:'europe', turn_range:[25,95], repeatable:false,
-    desc:'A research hospital in Belgium confirmed the birth of a healthy infant with confirmed mixed ancestry: the first since the Pleistocene. The parents are in hiding.',
+  { id:'hybrid_birth', cat:'INTEGRATION BREAKTHROUGH', title:'CONFIRMED NEANDERTHAL-SAPIENS HYBRID BIRTH',
+    species:'neanderthal', region:'europe', turn_range:[8,195], repeatable:false,
+    desc:'A research hospital in Belgium confirmed the birth of a healthy infant with confirmed mixed ancestry. The parents are in hiding with the child, fearing extremist threats.',
     choices:[
       { text:'Grant full sapiens citizenship to the child and family', effects:{integration_score:+10, extremism:+10, rights_conflict:+5, public_opinion:+10} },
       { text:'Provide protection but defer legal status', effects:{integration_score:+5, stability:-2} },
@@ -1766,7 +1766,7 @@ const EVENTS = [
     ]},
   { id:'neanderthal_hybrid_2', cat:'INTEGRATION BREAKTHROUGH',
     title:'NEANDERTHAL-SAPIENS CHILD BORN: FIRST HYBRID IN 40,000 YEARS',
-    species:'neanderthal', region:'europe', turn_range:[18,100], repeatable:false,
+    species:'neanderthal', region:'europe', turn_range:[9,200], repeatable:false,
     desc:'A research hospital in Liège confirmed the birth of a healthy infant with confirmed Neanderthal-sapiens mixed ancestry, genome-sequenced. The father is a Neanderthal research participant who learned conversational Dutch. Both parents in protective custody at own request. The child shows elevated brain volume for a newborn.',
     choices:[
       { text:'Grant full sapiens citizenship to the child and family', effects:{integration_score:+10, extremism:+10, rights_conflict:+5, public_opinion:+10} },
@@ -1776,7 +1776,7 @@ const EVENTS = [
   
   { id:'heidelberg_sapiens_encounter', cat:'RIGHTS & LAW',
     title:'SAPIENS AND HEIDELBERGENSIS: DOCUMENTED ROMANTIC INTEREST',
-    species:'heidelbergensis', region:'europe', turn_range:[12,200], repeatable:false,
+    species:'heidelbergensis', region:'europe', turn_range:[4,200], repeatable:false,
     desc:'Field researchers near Stuttgart have documented what appears to be a voluntary romantic interest between a H. sapiens field worker and a H. heidelbergensis individual participating in a long-term behavioral study. The two have been observed exchanging food, grooming behaviors, and sustained proximity over six months. The researcher is refusing to leave the study site. Rights advocates and nationalist groups are both watching closely.',
     choices:[
       { text:'Support integration: recognize the relationship and allow it to develop', effects:{knowledge:+5, integration_score:+5, rights_conflict:+5, extremism:+10, stability:-10}, queue_event:'heidelberg_sapiens_hybrid', queue_delay:3 },
@@ -1785,7 +1785,7 @@ const EVENTS = [
     ]},
   { id:'heidelberg_sapiens_hybrid', cat:'INTEGRATION BREAKTHROUGH',
     title:'HEIDELBERGENSIS-SAPIENS HYBRID BIRTH: FIRST IN RECORDED HISTORY',
-    species:'heidelbergensis', region:'europe', turn_range:[20,120], repeatable:false,
+    species:'heidelbergensis', region:'europe', turn_range:[9,220], repeatable:false,
     desc:'A pregnancy between the H. heidelbergensis study participant and the H. sapiens researcher has resulted in a live birth at a private hospital in Zurich. Genome sequencing confirms the child carries both lineages. Heidelbergensis is the last common ancestor of both Neanderthals and H. sapiens. Scientists describe this as an evolutionary echo of the ancestral split that produced two branches of humanity 700,000 years ago.',
     choices:[
       { text:'Grant the child and both parents full legal recognition and protection', effects:{integration_score:+10, extremism:+10, rights_conflict:+5, public_opinion:+10} },
@@ -1797,18 +1797,132 @@ const EVENTS = [
     species:'erectus', region:'east_asia', turn_range:[1,210], repeatable:false,
     desc:'Researchers monitoring a H. erectus group in Yunnan Province have confirmed a voluntary sexual encounter between a H. erectus male and a H. sapiens female who entered the monitored zone illegally. The biological gap between the two species is vastly larger than the Sapiens-Neanderthal divide. Geneticists warn of severe incompatibility risks. Nationalist groups have seized on the story.',
     choices:[
-      { text:'Allow it.', effects:{rights_conflict:+10, integration_score: +10, public_opinion: +10}, queue_event:'erectus_sapiens_birth_defect', queue_delay:9 },
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score: +10, public_opinion: +10}, queue_event:'erectus_sapiens_birth_defect', queue_delay:8 },
       { text:'Establish a protective legal framework: rights without encouraging further contact', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'erectus_sapiens_birth_defect', queue_delay:9 },
       { text:'Restrict the zone and issue a firm public statement on biological ethics', effects:{stability:+5, integration_score: -10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
     ]},
   { id:'erectus_sapiens_birth_defect', cat:'BIOLOGICAL CRISIS',
     title:'SAPIENS-ERECTUS CHILD: SEVERE DEVELOPMENTAL COMPLICATIONS', 
-    species:'erectus', region:'east_asia', turn_range:[15,220], repeatable:false,
+    species:'erectus', region:'east_asia', turn_range:[9,220], repeatable:false,
     desc:'A child has been born. Genome sequencing confirms mixed Homo sapiens and Homo erectus ancestry. The infant has severe neurological and skeletal developmental complications. The chromosomal distance between the two species produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
     choices:[
       { text:'Provide full medical care and use the case to demand urgent bioethics legislation', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
       { text:'Provide medical care quietly and keep the case out of the press', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
       { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score: -10} }
+    ]},
+
+  { id:'luzonensissapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. LUZONENSIS REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'luzonensis', region:'philippines', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring the only confirmed H. luzonensis population on Luzon have confirmed a voluntary sexual encounter between an H. luzonensis male and a H. sapiens female researcher who entered the monitored zone without authorization. H. luzonensis has a confirmed global population of 800. The biological gap between the two species is significant. Geneticists warn of severe incompatibility risks. Nationalist groups have seized on the story.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'luzonensissapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'luzonensissapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'luzonensissapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-LUZONENSIS CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'luzonensis', region:'philippines', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. luzonensis ancestry. The infant has severe neurological and skeletal developmental complications. The chromosomal distance between the two species produced cascading incompatibilities that no prenatal screening anticipated. With only 800 confirmed H. luzonensis individuals in the world, this case has drawn extraordinary international attention. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
+    ]},
+
+  { id:'antecessorsapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. ANTECESSOR REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'antecessor', region:'europe', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring an H. antecessor group near Atapuerca have confirmed a voluntary sexual encounter between an H. antecessor male and a H. sapiens female researcher who entered the monitored zone without authorization. Antecessor diverged from the sapiens lineage over 700,000 years ago, among the largest evolutionary gaps of any pairing documented in this crisis. Geneticists warn of severe incompatibility risks. The story has reached European media.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'antecessorsapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'antecessorsapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'antecessorsapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-ANTECESSOR CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'antecessor', region:'europe', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. antecessor ancestry. The infant has severe neurological and skeletal developmental complications. The chromosomal distance, among the largest of any attempted cross-species pairing in this crisis, produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
+    ]},
+
+  { id:'habilissapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. HABILIS REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'habilis', region:'east_africa', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring an H. habilis group in the Olduvai Gorge have confirmed a voluntary sexual encounter between an H. habilis male and a H. sapiens female researcher who entered the monitored zone without authorization. H. habilis diverged from the sapiens lineage approximately 2.3 million years ago. The biological gap is substantial. Geneticists warn of severe incompatibility risks. The cognitive tier framework used to evaluate consent is being immediately challenged.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'habilissapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'habilissapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'habilissapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-HABILIS CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'habilis', region:'east_africa', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. habilis ancestry. The infant has severe neurological and skeletal developmental complications. The 2.3-million-year chromosomal distance between the two species produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
+    ]},
+
+  { id:'ergastersapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. ERGASTER REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'ergaster', region:'africa', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring an H. ergaster group in East Africa have confirmed a voluntary sexual encounter between an H. ergaster male and a H. sapiens female researcher who entered the monitored zone without authorization. H. ergaster is among the earliest members of the Homo genus -- the biological gap is vast. Geneticists warn of severe incompatibility risks. The story has reached international media and nationalist groups have responded immediately.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'ergastersapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'ergastersapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'ergastersapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-ERGASTER CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'ergaster', region:'africa', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. ergaster ancestry. The infant has severe neurological and skeletal developmental complications. H. ergaster is among the oldest members of the Homo genus, the chromosomal distance produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
+    ]},
+
+  { id:'georgicussapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. GEORGICUS REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'georgicus', region:'caucasus', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring an H. georgicus group in the Caucasus have confirmed a voluntary sexual encounter between an H. georgicus male and a H. sapiens female researcher who entered the monitored zone without authorization. H. georgicus is one of the earliest hominins to have dispersed out of Africa -- the biological gap is significant. Geneticists warn of severe incompatibility risks. The Georgian government is requesting UN guidance.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'georgicussapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'georgicussapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'georgicussapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-GEORGICUS CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'georgicus', region:'caucasus', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. georgicus ancestry. The infant has severe neurological and skeletal developmental complications. The chromosomal distance between the two species produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
+    ]},
+
+  { id:'floresiensissapiensattempt', cat:'RIGHTS LAW',
+    title:'SAPIENS AND H. FLORESIENSIS REPRODUCTIVE CONTACT DOCUMENTED',
+    species:'floresiensis', region:'indonesia', turn_range:[4,210], repeatable:false,
+    desc:'Researchers monitoring an H. floresiensis group on Flores have confirmed a voluntary sexual encounter between an H. floresiensis male and a H. sapiens female researcher who entered the monitored zone without authorization. H. floresiensis is a highly distinct insular dwarf species with a unique evolutionary trajectory isolated for hundreds of thousands of years. The biological gap is significant. Geneticists warn of severe incompatibility risks. Nationalist groups have seized on the story.',
+    choices:[
+      { text:'Allow it.', effects:{rights_conflict:+10, integration_score:+10, public_opinion:+10}, queue_event:'floresiensissapiensbirthdefect', queue_delay:9 },
+      { text:'Establish a protective legal framework, rights without encouraging further contact.', effects:{rights_conflict:+2, stability:+2, extremism:+2}, queue_event:'floresiensissapiensbirthdefect', queue_delay:9 },
+      { text:'Restrict the zone and issue a firm public statement on biological ethics.', effects:{stability:+5, integration_score:-10, rights_conflict:-10, extremism:+5, public_opinion:-10} }
+    ]},
+  { id:'floresiensissapiensbirthdefect', cat:'BIOLOGICAL CRISIS',
+    title:'SAPIENS-FLORESIENSIS CHILD -- SEVERE DEVELOPMENTAL COMPLICATIONS',
+    species:'floresiensis', region:'indonesia', turn_range:[8,220], repeatable:false,
+    desc:'A child has been born. Genome sequencing confirms mixed H. sapiens and H. floresiensis ancestry. The infant has severe neurological and skeletal developmental complications. H. floresiensis is an insular dwarf species with a unique evolutionary history, the developmental mismatches across skull morphology, limb proportion, and neural architecture were severe and numerous. No prenatal screening anticipated the scope of the incompatibilities. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
+    choices:[
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation.', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
+      { text:'Provide medical care quietly and keep the case out of the press.', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
+      { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction.', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score:-10} }
     ]},
 
   { id:'flores_fish_market', cat:'SCIENTIFIC DISCOVERY',
@@ -3900,16 +4014,16 @@ const EVENTS = [
   ]
 }
 
-// ---- CHAIN 9: THE HYBRID BIRTH (turns 70-140) ----
+// ---- CHAIN 9: THE HYBRID BIRTH (turns 12-240) ----
 ,{
   id: 'chain_hybrid_birth_parent',
   cat: 'RIGHTS LAW',
   title: 'CONFIRMED: SAPIENS-NEANDERTHAL PREGNANCY INDEPENDENTLY VERIFIED BY THREE INSTITUTIONS',
   species: 'neanderthal',
   region: 'europe',
-  turn_range: [70, 140],
+  turn_range: [4, 240],
   repeatable: false,
-  desc: 'A confirmed sapiens-neanderthal pregnancy has been verified by three separate medical institutions. The child, if carried to term, will be the first documented hybrid birth in 40,000 years. Both parents have requested privacy. The world has decided not to grant it.',
+  desc: 'A confirmed sapiens-neanderthal pregnancy has been verified by three separate medical institutions. Both parents have requested privacy. The world has decided not to grant it.',
   choices: [
     {
       text: 'Issue a protective privacy order. This is a medical matter above all else.',
@@ -3931,7 +4045,7 @@ const EVENTS = [
   title: 'HYBRID INFANT BORN HEALTHY: PRIVACY ORDER HOLDS',
   species: 'neanderthal',
   region: 'europe',
-  turn_range: [4, 240],
+  turn_range: [8, 240],
   repeatable: false,
   requires_seen: 'chain_hybrid_birth_parent',
   desc: 'The child was born in a protected facility with no press access. Both parents are healthy. A single authorized photograph shows a sapiens-presenting infant with a notably larger occipital bone. It has been shared two billion times.',
@@ -3954,7 +4068,7 @@ const EVENTS = [
   title: 'BIRTH DOCUMENTED BY PRESS WITHOUT CONSENT: LEGAL BATTLE BEGINS',
   species: 'neanderthal',
   region: 'europe',
-  turn_range: [4, 240],
+  turn_range: [8, 240],
   repeatable: false,
   requires_seen: 'chain_hybrid_birth_parent',
   desc: 'Without official comment, press obtained photographs of the birth through a medical facility source. The family is suing 14 outlets simultaneously. Sapiens First is using the images in recruitment campaigns. The infant\'s legal status is undefined.',
@@ -4195,7 +4309,7 @@ const EVENTS = [
   title: 'CROSS-SPECIES PATHOGEN RESURFACES WITH ANTIBIOTIC RESISTANCE',
   species: null,
   region: null,
-  turn_range: [60, 180],
+  turn_range: [20, 180],
   repeatable: false,
   desc: 'A strain of the cross-species pathogen has reemerged with documented antibiotic resistance in populations across Southeast Asia and Central Africa. All existing treatment protocols are now partially ineffective. WHO is describing it as the most dangerous variant to date.',
   choices: [
@@ -4222,7 +4336,7 @@ const EVENTS = [
   title: 'DISEASE INDEX AT CRITICAL THRESHOLD: SAPIENS MORTALITY CONFIRMED',
   species: null,
   region: null,
-  turn_range: [40, 240],
+  turn_range: [20, 240],
   repeatable: false,
   trigger_condition: 'disease_high',
   desc: 'For the first time since the crisis began, confirmed sapiens fatalities linked to cross-species pathogen transmission have been reported. The political landscape has shifted overnight. Sapiens First is gaining 200,000 new followers per day. WHO has convened an emergency session.',
@@ -4250,14 +4364,14 @@ const EVENTS = [
   title: 'DISEASE INDEX AT ZERO DECLARED: RESEARCHERS WARN OF DORMANT RESERVOIR',
   species: null,
   region: null,
-  turn_range: [30, 220],
+  turn_range: [3, 220],
   repeatable: false,
-  desc: 'The disease index has reached zero for the first time. Your office is preparing a statement. Three independent research teams are urging caution, citing evidence of a dormant viral reservoir in non-sapiens gut microbiome populations that existing tests cannot detect.',
+  desc: 'The disease index has reached zero. Your office is preparing a statement. Three independent research teams are urging caution, citing evidence of a dormant viral reservoir in non-sapiens gut microbiome populations that existing tests cannot detect.',
   choices: [
     {
-      text: 'Celebrate publicly. Fund ongoing surveillance as a precaution.',
+      text: 'Celebrate publicly with Neanderthals and Denisovans',
       subtext: '+Opinion -Budget +Disease risk',
-      effects: { public_opinion: +15, budget: -100, disease: +3 }
+      effects: { public_opinion: +15, budget: -100, disease: +10 }
     },
     {
       text: 'Fund the reservoir research before making any public declaration.',
@@ -4267,7 +4381,7 @@ const EVENTS = [
     {
       text: 'Declare victory and redirect the disease budget to integration programs.',
       subtext: '+Integration +Opinion +Disease risk',
-      effects: { integration_score: +10, public_opinion: +20, budget: +150, disease: +8 }
+      effects: { integration_score: +10, public_opinion: +20, budget: +150, disease: +30 }
     }
   ]
 }
@@ -6087,7 +6201,32 @@ function advanceTurn() {
     if (_ev4 && !stagedEvents.find(e => e.id === _ev4.id)) stagedEvents.push(_ev4);
   }
   // === END PUSHBACK PRIORITY SYSTEM ===
-  if (GS.turn > 3 && !_pushbackFired) {
+  // HYBRID PRIORITY SYSTEM
+  let _hybridFired = false;
+  const HYBRID_PARENT_IDS = [
+    'erectus_sapiens_attempt',
+    'heidelberg_sapiens_encounter',
+    'neanderthal_hybrid_2',
+    'luzonensissapiensattempt',
+    'antecessorsapiensattempt',
+    'habilissapiensattempt',
+    'ergastersapiensattempt',
+    'georgicussapiensattempt',
+    'floresiensissapiensattempt'
+  ];
+  HYBRID_PARENT_IDS.forEach(hid => {
+    const hev = EVENTS.find(e => e.id === hid);
+    if (!hev) return;
+    if (GS.events_seen.includes(hid)) return;
+    if (stagedEvents.find(e => e.id === hid)) return;
+    if (eventQueue.find(e => e.id === hid)) return;
+    if (GS.pendingEvents && GS.pendingEvents.some(pe => pe.eventId === hid)) return;
+    if (hev.turn_range && (GS.turn < hev.turn_range[0] || GS.turn > hev.turn_range[1])) return;
+    _hybridFired = true;
+    stagedEvents.push(hev);
+  });
+  // END HYBRID PRIORITY SYSTEM
+  if (GS.turn > 3 && !_pushbackFired && !_hybridFired) {
   const eventsPerTurn = GS.difficulty === 'hard' ? 2 : GS.difficulty === 'extinction' ? 3 : 1;
   
   const eligible = EVENTS.filter(e => {
