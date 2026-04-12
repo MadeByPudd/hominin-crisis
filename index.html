@@ -693,7 +693,7 @@ canvas { touch-action: none; }
     <div class="title-lore">On January 2, 2026, satellite imagery confirmed what NGO field teams and border patrols had been reporting for 48 hours. They're back. Across multiple regions, fifteen species of extinct humans have reappeared. Disoriented, territorial, and very much alive. You have been appointed UN Special Representative for Non-Sapiens Affairs. What happens next is entirely up to you. What makes a species human?</div>
     <div class="title-difficulty">
       <label>DIFFICULTY:</label>
-      <select id="difficulty-select">
+      <select id="difficulty-select" onchange="localStorage.setItem('hominin_difficulty', this.value)">
         <option value="easy">EASY - FOR BEGINNERS </option>
         <option value="normal" selected>NORMAL</option>
         <option value="hard">HARD - DOUBLE EVENTS</option>
@@ -759,7 +759,7 @@ canvas { touch-action: none; }
           <div class="policies-remaining">POLICIES: <span id="policies-left">3</span> this turn</div>
           <div class="turn-status">T<span id="turn-num">0</span>/240</div>
         </div>
-        <div id="win-hint">Survival: T240 + Stab ≥50% | Integration: ≥100 pts</div>
+        <div id="win-hint">Survival: T240 + Stab ≥50% | Integration: 100% + Rights 100% + Opinion ≥90%</div>
         <button class="btn btn-primary" id="advance-turn-btn" onclick="advanceTurn()">⟫ END TURN</button>
       </div>
     </div>
@@ -883,7 +883,7 @@ canvas { touch-action: none; }
       <strong>3 Policies Per Turn:</strong> You can enact up to 3 policies each turn. You get income for your budget each turn. Spend wisely the first 3 turns set the trajectory for the next 20 years.
     </div>
     <div class="onboarding-tip row3">
-      <strong>3 Ways to Win:</strong> Survive 240 turns with stability above 50%, achieve full Integration (100% integration + 75% rights), or let all non-sapiens species go extinct. <span class="row3-warn">If stability hits zero, your save is wiped and you start fresh.</span>
+      <strong>3 Ways to Win:</strong> Survive 240 turns with stability above 50%, achieve full Integration (100% integration + 100% rights + 90% public opinion), or let all non-sapiens species go extinct. <span class="row3-warn">If stability hits zero, your save is wiped and you start fresh.</span>
     </div>
     <div class="onboarding-tip">
       <strong>The Map:</strong> Click any species dot to reveal their lore. Hover for live population data. Colored regions reflect global stability in real-time.
@@ -1409,10 +1409,10 @@ const EVENTS = [
     choices:[
       { text:'Condemn the exhibition and demand immediate release to sanctuary', effects:{rights_conflict:+5, public_opinion:+10, stability:+5, integration_score:+4} },
       { text:'Acknowledge concerns but defer to national law', effects:{rights_conflict:-10, public_opinion:-10, extremism:+10} },
-      { text:'Fast-track international sanctuary standards framework', effects:{rights_conflict:+10, budget:-400, knowledge:+15, integration_score:+10} }
+      { text:'Fast-track international sanctuary standards framework', effects:{rights_conflict:+10, budget:-200, knowledge:+15, integration_score:+10} }
     ]},
   { id:'personhood_vote', cat:'RIGHTS & LAW', title:'UN GENERAL ASSEMBLY VOTES ON NEANDERTHAL PERSONHOOD',
-    species:'neanderthal', region:'europe', turn_range:[15,75], repeatable:false,
+    species:'neanderthal', region:'europe', turn_range:[12,175], repeatable:false,
     desc:'The resolution is on the floor: "Non-Sapiens Persons": a legal category granting rights based on cognitive and social complexity rather than species. The vote is expected to be close, with some nations threatening to withdraw aid from those voting in favor.',
     choices:[
       { text:'Lobby aggressively for passage', effects:{rights_conflict:+10, integration_score:+10, extremism:+5, stability:-1, public_opinion:+10} },
@@ -1433,7 +1433,7 @@ const EVENTS = [
     choices:[
       { text:'Issue statement supporting integration and cognitive non-discrimination', effects:{integration_score:+10, rights_conflict:+10, extremism:-10, public_opinion:+10} },
       { text:'Call for new academic frameworks before integrating', effects:{integration_score:-2, stability:+1, knowledge:+15} },
-      { text:'Fund a dedicated non-sapiens academic program globally. Separate but equal', effects:{integration_score:-10, budget:-400, knowledge:+30, extremism:+10} }
+      { text:'Fund a dedicated non-sapiens academic program globally. Separate but equal', effects:{integration_score:-10, budget:-200, knowledge:+30, extremism:+10} }
     ]},
   { id:'denisovan_music', cat:'INTEGRATION BREAKTHROUGH', title:'DENISOVAN MUSICIAN GOES VIRAL: 40 MILLION STREAMS',
     species:'denisovan', region:'siberia', turn_range:[15,65], repeatable:false,
@@ -1560,7 +1560,7 @@ const EVENTS = [
     species:null, region:null, turn_range:[12,65], repeatable:false,
     desc:'The UN Secretary-General called for an emergency global summit to establish binding frameworks for non-sapiens governance: personhood tiers, military protocols, interbreeding law, research ethics, sanctuary standards. 147 nations agreed to attend. The most watched event in human history.',
     choices:[
-      { text:'Host the summit: flagship achievement for your tenure', effects:{stability:+10, budget:-400, integration_score:+10, rights_conflict:+10, extremism:+5} },
+      { text:'Host the summit: flagship achievement for your tenure', effects:{stability:+10, budget:-200, integration_score:+10, rights_conflict:+10, extremism:+5} },
       { text:'Participate as active member and shape the agenda', effects:{stability:+5, budget:-150, integration_score:+5} },
       { text:'Attend but limit commitments', effects:{stability:+2} }
     ]},
@@ -1806,7 +1806,7 @@ const EVENTS = [
     species:'erectus', region:'east_asia', turn_range:[15,220], repeatable:false,
     desc:'A child has been born. Genome sequencing confirms mixed Homo sapiens and Homo erectus ancestry. The infant has severe neurological and skeletal developmental complications. The chromosomal distance between the two species produced cascading incompatibilities that no prenatal screening anticipated. The child requires intensive care. Bioethicists, rights advocates, and extremist groups are reacting simultaneously. This case will define interspecies reproductive law for decades.',
     choices:[
-      { text:'Provide full medical care and use the case to demand urgent bioethics legislation', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-600} },
+      { text:'Provide full medical care and use the case to demand urgent bioethics legislation', effects:{extremism:+10, stability:-10, knowledge:+20, public_opinion:+10, budget:-300} },
       { text:'Provide medical care quietly and keep the case out of the press', effects:{stability:+5, extremism:+5, public_opinion:-10, budget:-100} },
       { text:'Issue a formal public statement using this outcome to oppose further cross-species reproduction', effects:{extremism:-10, stability:+10, rights_conflict:-10, integration_score: -10} }
     ]},
@@ -1825,7 +1825,7 @@ const EVENTS = [
     species:null, region:'east_africa', turn_range:[18,160], repeatable:false,
     desc:'Extreme drought collapsed habitat of three non-sapiens species simultaneously, forcing them all into the East African Rift Valley. H. habilis, Paranthropus, and Au. afarensis now compete for the same dwindling food sources in a zone already under H. sapiens agricultural pressure.',
     choices:[
-      { text:'Emergency multi-species habitat corridor: all three protected', effects:{ecological_stress:-10, budget:-400, stability:+5, rights_conflict:+5} },
+      { text:'Emergency multi-species habitat corridor: all three protected', effects:{ecological_stress:-10, budget:-200, stability:+5, rights_conflict:+5} },
       { text:'Prioritize the most cognitively advanced species', effects:{ecological_stress:-5, extremism:+5} },
       { text:'This exceeds the mandate; refer to national governments', effects:{ecological_stress:+10, stability:-5, public_opinion:-10} }
     ]},
@@ -2808,7 +2808,7 @@ const EVENTS = [
     desc: 'A palm oil company has cleared 12,000 hectares that served as the primary migration corridor between H. floresiensis sanctuary zones on Flores. Three family groups are now isolated. Estimated inbreeding collapse: within 10 years.',
     species: 'floresiensis', region: 'indonesia', repeatable: false,
     choices: [
-      { text: 'Invoke emergency habitat protection and halt all clearing immediately', effects: { ecological_stress: -10, budget: -400, integration_score: +10 } },
+      { text: 'Invoke emergency habitat protection and halt all clearing immediately', effects: { ecological_stress: -10, budget: -200, integration_score: +10 } },
       { text: 'Pursue diplomatic pressure on Indonesian government', effects: { ecological_stress: -10, stability: -10, integration_score: +5 } },
       { text: 'Offer a UN corridor buyout from the company', effects: { ecological_stress: -10, budget: -800, public_opinion: +10 } }
     ] },
@@ -2864,7 +2864,7 @@ const EVENTS = [
     desc: "Istanbul has ratified the world's first Multi-Species City Charter, granting Neanderthal and Denisovan residents full municipal citizenship with local voting rights. The President calls it \"the most significant civic act ever.\" Forty cities are watching.",
     species: null, region: 'europe', repeatable: false,
     choices: [
-      { text: 'Endorse and replicate the model in 5 cities immediately', effects: { integration_score: +10, rights_conflict: +10, budget: -500, extremism: +10 } },
+      { text: 'Endorse and replicate the model in 5 cities immediately', effects: { integration_score: +10, rights_conflict: +10, budget: -300, extremism: +10 } },
       { text: 'Celebrate the milestone and encourage organic replication', effects: { integration_score: +10, public_opinion: +10 } },
       { text: 'Caution against moving faster than public opinion allows', effects: { stability: +10, public_opinion: +5 } }
     ] },
@@ -4011,7 +4011,7 @@ const EVENTS = [
     {
       text: 'Support transitional governance in all three nations.',
       subtext: '-Stability -Budget +Integration -Extremism',
-      effects: { stability: -15, budget: -400, integration_score: +20, extremism: -20 }
+      effects: { stability: -15, budget: -200, integration_score: +20, extremism: -20 }
     },
     {
       text: 'Let the collapses resolve through domestic political processes.',
@@ -4143,7 +4143,7 @@ const EVENTS = [
     {
       text: 'Adopt the rewilding recommendation as binding UN policy.',
       subtext: '-EcoStress -Stability +Integration -Budget',
-      effects: { ecological_stress: -20, stability: -10, integration_score: +15, budget: -400 }
+      effects: { ecological_stress: -20, stability: -10, integration_score: +15, budget: -200 }
     },
     {
       text: 'Adopt a voluntary 6 percent target as a political compromise.',
@@ -4171,7 +4171,7 @@ const EVENTS = [
     {
       text: 'Declare a global ecological emergency. All integration projects pause for triage.',
       subtext: '-EcoStress -Integration -Budget',
-      effects: { ecological_stress: -20, integration_score: -10, budget: -400, stability: +5 }
+      effects: { ecological_stress: -20, integration_score: -10, budget: -200, stability: +5 }
     },
     {
       text: 'Emergency relocation of the most at-risk populations into protected sapiens zones.',
@@ -4230,7 +4230,7 @@ const EVENTS = [
     {
       text: 'Activate WHO Emergency Declaration. Full international response.',
       subtext: '-Disease +Stability -Budget',
-      effects: { disease: -15, stability: +5, budget: -400 }
+      effects: { disease: -15, stability: +5, budget: -200 }
     },
     {
       text: 'Impose immediate separation of all sapiens and non-sapiens populations.',
@@ -4719,19 +4719,19 @@ const EVENTS = [
   title: 'NON-SAPIENS INDIVIDUALS WORKING IN SAPIENS ECONOMY WITH NO LEGAL FRAMEWORK',
   species: null,
   region: null,
-  turn_range: [40, 80],
+  turn_range: [10, 180],
   repeatable: false,
-  desc: 'An ILO audit has confirmed that an estimated 340,000 non-sapiens individuals are currently performing economic labor inside sapiens settlements with zero legal protections. No minimum wage framework exists. No workplace safety standards apply. Several have been injured. The audit notes they cannot file complaints because they have no legal standing to do so.',
+  desc: 'An International Labour Organization audit has confirmed that an estimated 340,000 non-sapiens individuals are currently performing economic labor inside sapiens settlements with zero legal protections. No minimum wage framework exists. No workplace safety standards apply. Several have been injured. The audit notes they cannot file complaints because they have no legal standing to do so.',
   choices: [
     {
       text: 'Issue emergency ILO protections covering all working non-sapiens individuals.',
       subtext: '+Rights +Integration +Extremism -Budget',
-      effects: { rights_conflict: +20, integration_score: +15, extremism: +12, budget: -200 }
+      effects: { rights_conflict: +10, integration_score: +10, extremism: +10, budget: -200 }
     },
     {
       text: 'Create a voluntary compliance framework for employers.',
       subtext: '+Rights +Stability -Integration',
-      effects: { rights_conflict: +10, stability: +5, integration_score: -5, extremism: +5 }
+      effects: { rights_conflict: +5, stability: +5, integration_score: -5, extremism: +5 }
     },
     {
       text: 'Defer to member state jurisdiction. This is a domestic labor issue.',
@@ -4746,14 +4746,14 @@ const EVENTS = [
   title: 'UN BIOETHICS COMMITTEE: NON-SAPIENS INDIVIDUALS CANNOT LEGALLY REFUSE TREATMENT',
   species: null,
   region: null,
-  turn_range: [42, 78],
+  turn_range: [4, 240],
   repeatable: false,
   desc: 'A UN Bioethics Committee report has confirmed that under current international law, no non-sapiens individual has the legal right to refuse medical treatment, quarantine, or surgical intervention. The gap in the rights framework was not intentional. No one noticed it until now. Three non-sapiens individuals are currently being treated against their documented resistance.',
   choices: [
     {
       text: 'Amend the Non-Sapiens Persons Act to include informed consent protections immediately.',
       subtext: '+Rights +Integration +Extremism -Budget',
-      effects: { rights_conflict: +18, integration_score: +12, extremism: +10, budget: -150 }
+      effects: { rights_conflict: +10, integration_score: +10, extremism: +10, budget: -150 }
     },
     {
       text: 'Commission a framework review. Take no action until the review is complete.',
@@ -4763,7 +4763,7 @@ const EVENTS = [
     {
       text: 'Classify the report. The public health implications of allowing refusal are too severe.',
       subtext: '-Rights -Integration +Disease',
-      effects: { rights_conflict: -12, integration_score: -10, disease: -5 }
+      effects: { rights_conflict: -10, integration_score: -10, disease: +5 }
     }
   ]
 }
@@ -4773,24 +4773,24 @@ const EVENTS = [
   title: 'AUDIT: NON-SAPIENS INDIVIDUALS HELD IN CONTAINMENT FOR OVER THREE YEARS WITHOUT REVIEW',
   species: null,
   region: null,
-  turn_range: [45, 80],
+  turn_range: [40, 180],
   repeatable: false,
   desc: 'An independent UN audit found 1,200 non-sapiens individuals who have been held in containment facilities for over three years with no legal review, no release date, and no access to representation. Under sapiens law the same detention would be illegal. The audit requests guidance on whether sapiens legal standards apply.',
   choices: [
     {
       text: 'Order immediate case-by-case legal review for all 1,200 individuals.',
-      subtext: '+Rights +Integration +Extremism -Budget -Stability',
-      effects: { rights_conflict: +22, integration_score: +15, extremism: +15, budget: -250, stability: -8 }
+      subtext: '+Rights +Integration +Extremism -Budget +Stability',
+      effects: { rights_conflict: +10, integration_score: +10, extremism: +10, budget: -250, stability: +10 }
     },
     {
       text: 'Establish a maximum detention period of 12 months going forward. No retroactive review.',
-      subtext: '+Rights +Stability',
-      effects: { rights_conflict: +12, stability: +5, extremism: +8 }
+      subtext: '+Rights +Stability +Extremism -Budget',
+      effects: { rights_conflict: +10, stability: +5, extremism: +5, budget: -150 }
     },
     {
       text: 'Defer to the member states operating the facilities.',
       subtext: '-Rights -Integration +Extremism',
-      effects: { rights_conflict: -15, integration_score: -12, extremism: +18 }
+      effects: { rights_conflict: -10, integration_score: -10, extremism: +10 }
     }
   ]
 }
@@ -4800,24 +4800,24 @@ const EVENTS = [
   title: 'MOTION FILED: SHOULD COGNITIVELY ELIGIBLE NON-SAPIENS INDIVIDUALS VOTE?',
   species: null,
   region: null,
-  turn_range: [55, 85],
+  turn_range: [12, 185],
   repeatable: false,
   desc: 'A formal motion has been filed at the UN General Assembly asking whether cognitively eligible non-sapiens individuals should be granted limited voting rights in jurisdictions where they reside and work. Legal scholars have identified 14,000 such individuals who would immediately qualify under proposed cognitive thresholds.',
   choices: [
     {
       text: 'Support the motion. Cognitive eligibility is the correct legal threshold.',
-      subtext: '+Rights +Integration +Extremism -Stability',
-      effects: { rights_conflict: +25, integration_score: +20, extremism: +22, stability: -15 }
+      subtext: '+Rights +Integration +Extremism +Stability',
+      effects: { rights_conflict: +10, integration_score: +10, extremism: +10, stability: +10 }
     },
     {
       text: 'Support a limited consultative role only. Not full voting rights yet.',
-      subtext: '+Rights +Integration +Extremism',
-      effects: { rights_conflict: +12, integration_score: +10, extremism: +12 }
+      subtext: 'Rights -Integration +Extremism +Stability',
+      effects: { rights_conflict: +5, integration_score: -10, extremism: +5, stability: +5 }
     },
     {
       text: 'Oppose the motion. Species status must be resolved before voting rights.',
       subtext: '-Rights -Integration +Stability +Extremism',
-      effects: { rights_conflict: -15, integration_score: -10, stability: +8, extremism: +12 }
+      effects: { rights_conflict: -15, integration_score: -10, stability: +5, extremism: +10 }
     }
   ]
 }
@@ -4834,17 +4834,17 @@ const EVENTS = [
     {
       text: 'Create a Non-Sapiens Education Rights Protocol covering all children.',
       subtext: '+Rights +Integration +Extremism -Budget',
-      effects: { rights_conflict: +18, integration_score: +18, extremism: +10, budget: -200 }
+      effects: { rights_conflict: +10, integration_score: +10, extremism: +10, budget: -200 }
     },
     {
       text: 'Pilot an integration schooling program in three cities first.',
-      subtext: '+Integration +Knowledge -Budget',
-      effects: { integration_score: +12, knowledge: +15, budget: -120, rights_conflict: +8 }
+      subtext: '+Integration +Knowledge -Budget +Rights',
+      effects: { integration_score: +10, knowledge: +25, budget: -120, rights_conflict: +5 }
     },
     {
       text: 'Recommend member states address this domestically.',
       subtext: '+Extremism -Rights -Integration',
-      effects: { extremism: +10, rights_conflict: -8, integration_score: -8 }
+      effects: { extremism: +10, rights_conflict: -10, integration_score: -10 }
     }
   ]
 }
@@ -4857,24 +4857,24 @@ const EVENTS = [
   title: 'GLOBAL RIGHTS SURGE TRIGGERS SAPIENS SOVEREIGNTY SUMMIT',
   species: null,
   region: null,
-  turn_range: [10, 240],
+  turn_range: [4, 240],
   repeatable: false,
-  desc: 'A coalition of 14 national governments has convened an emergency summit in direct response to non-sapiens rights reaching legal parity levels in their jurisdictions. The summit\'s declared objective is a binding counter-framework called the Sapiens Sovereignty Treaty. Three permanent Security Council members are privately sympathetic to the coalition.',
+  desc: 'Sapiens First International has called an emergency counter-summit in Budapest, citing your office\'s rights record as "the systematic dismantling of human civilization." Fourteen governments sent delegations, three of them Security Council members. The summit\'s stated goal: To begin the process of creating a Sapiens Sovereignty Treaty that would legally supersede any non-sapiens personhood framework. This is the most coordinated political action against non-sapiens since the crisis began. They planned this for months.',
   choices: [
     {
       text: 'Attend the summit and argue against the treaty directly.',
-      subtext: '-Extremism -Rights -Budget -Stability +Opinion',
-      effects: { extremism: -10, rights_conflict: -5, budget: -250, stability: -8, public_opinion: +5 }
+      subtext: '-Extremism +Rights -Budget -Stability +Opinion',
+      effects: { extremism: -10, rights_conflict: +5, budget: -250, stability: +10, public_opinion: +10 }
     },
     {
-      text: 'Boycott the summit and issue a formal public condemnation.',
+      text: 'Boycott the summit.',
       subtext: '+Extremism -Rights -Stability -Opinion',
-      effects: { extremism: +15, rights_conflict: -10, stability: -5, public_opinion: -10 }
+      effects: { extremism: +15, rights_conflict: -15, stability: -15, public_opinion: -15 }
     },
     {
-      text: 'Send an observer only. Gather intelligence without legitimizing the summit.',
-      subtext: '+Extremism +Stability +Knowledge -Budget',
-      effects: { extremism: +5, stability: +3, knowledge: +20, budget: -80 }
+      text: 'Send an observer only. Gather intelligence without legitimizing the summit and raise funds for a counter-campaign.',
+      subtext: '+Extremism +Stability +Knowledge +Budget',
+      effects: { extremism: +20, rights_conflict: -10, stability: +10, knowledge: +20, budget: +250 }
     }
   ]
 }
@@ -4884,24 +4884,24 @@ const EVENTS = [
   title: 'SAPIENS FIRST EMERGENCY MOBILIZATION: INTEGRATION MILESTONE REACHED',
   species: null,
   region: null,
-  turn_range: [20, 240],
+  turn_range: [4, 240],
   repeatable: false,
-  desc: 'For the first time in recorded history, the global integration index has crossed 50 percent. Sapiens First International has released a 90-minute broadcast calling it the beginning of the end of human civilization. Recruitment is up 340 percent in 72 hours. Three governments have requested emergency bilateral meetings.',
+  desc: 'For the first time in recorded history, the global integration index has crossed 50 percent. Sapiens First International has released a 90-minute broadcast calling it the beginning of the end of human civilization. Recruitment is up. Three governments have requested emergency bilateral meetings.',
   choices: [
     {
-      text: 'Issue a statement celebrating the milestone. Own the achievement publicly.',
+      text: 'Issue a statement celebrating the milestone and call Sapiens First\'s rhetoric dangerous.',
       subtext: '+Integration +Extremism +Opinion -Stability',
-      effects: { integration_score: +5, extremism: +18, public_opinion: +12, stability: -12 }
+      effects: { integration_score: +5, extremism: +5, public_opinion: +10, stability: -10 }
     },
     {
       text: 'Make no statement. Let the milestone speak for itself.',
       subtext: '+Extremism -Stability -Opinion',
-      effects: { extremism: +10, stability: -3, public_opinion: -5 }
+      effects: { extremism: +10, stability: -10, public_opinion: -5 }
     },
     {
-      text: 'Acknowledge legitimate concerns while firmly defending the framework.',
-      subtext: '+Stability +Extremism +Opinion -Budget -Integration',
-      effects: { stability: +5, extremism: +8, public_opinion: +5, budget: -150, integration_score: -3 }
+      text: 'Acknowledge legitimate concerns while firmly defending the framework with Hominin education courses and integration success stories.',
+      subtext: '+Stability +Extremism +Opinion -Budget +Integration',
+      effects: { stability: +10, extremism: -10, public_opinion: +10, budget: -250, integration_score: +10 }
     }
   ]
 }
@@ -4911,24 +4911,24 @@ const EVENTS = [
   title: 'DISEASE INDEX ELIMINATED: NEW RESISTANT VARIANT EMERGES 47 DAYS LATER',
   species: null,
   region: null,
-  turn_range: [5, 240],
+  turn_range: [4, 240],
   repeatable: true,
-  desc: 'Your elimination of the cross-species disease index was celebrated globally. It lasted 47 days. A new variant has been identified simultaneously in three locations across two continents. Unlike its predecessors, this strain exploits a receptor pathway that existing vaccines do not address. Early models suggest it spreads 2.3 times faster. WHO Director-General: "We are not back to zero. We are below zero."',
+  desc: 'Your elimination of the cross-species disease index was celebrated globally. A new variant has been identified simultaneously in three locations across two continents. Unlike its predecessors, this strain exploits a receptor pathway that existing vaccines do not address. Early models suggest it spreads 2 times faster.',
   choices: [
     {
       text: 'Emergency WHO response. Treat this as a new outbreak from day one.',
       subtext: '+Disease -Budget +Knowledge +Stability',
-      effects: { disease: +18, budget: -300, knowledge: +15, stability: +3 }
+      effects: { disease: +20, budget: -300, knowledge: +15, stability: +5 }
     },
     {
       text: 'Rebuild surveillance with variant-specific detection protocols.',
       subtext: '+Disease -Budget +Knowledge',
-      effects: { disease: +22, budget: -200, knowledge: +25 }
+      effects: { disease: +25, budget: -200, knowledge: +25 }
     },
     {
       text: 'Isolate all confirmed inter-species contact zones immediately.',
-      subtext: '+Disease -Integration -Rights -Stability',
-      effects: { disease: +15, integration_score: -8, rights_conflict: -10, stability: -5 }
+      subtext: '+Disease -Integration -Rights -Stability +Extremism',
+      effects: { disease: +10, integration_score: -10, rights_conflict: -10, stability: -10, extremism: +20 }
     }
   ]
 }
@@ -4938,24 +4938,24 @@ const EVENTS = [
   title: 'PEAK APPROVAL TRIGGERS THREE SIMULTANEOUS INVESTIGATIVE PROBES',
   species: null,
   region: null,
-  turn_range: [10, 240],
+  turn_range: [4, 240],
   repeatable: true,
-  desc: 'Your public approval has reached historic highs. Three major investigative journalism networks have independently launched probes with the same mandate: nobody governing a crisis of this complexity is this popular without controlling the information. A leaked internal memo suggests your office withheld negative ecological data from public reports for six consecutive turns.',
+  desc: 'Sapiens First International released a 40-minute broadcast across 14 platforms alleging your office has systematically suppressed disease outbreak data and ecological impact reports to manufacture the appearance of a successful mandate. No sources are named. No documents are provided. Three of their claims directly contradict publicly available WHO reports. It doesn\'t matter. The broadcast has been viewed 900 million times in 36 hours, and three mainstream outlets have run "questions are being raised" coverage without verification. SPI believes your approval rating is too high.',
   choices: [
     {
       text: 'Full transparency. Release all reports including the unflattering ones.',
-      subtext: '-Opinion -Stability +Knowledge -Budget -Extremism',
-      effects: { public_opinion: -15, stability: -5, knowledge: +20, budget: -100, extremism: -5 }
+      subtext: '+Opinion -Stability +Knowledge -Budget -Extremism',
+      effects: { public_opinion: +20, stability: -5, knowledge: +20, budget: -100, extremism: -20 }
     },
     {
       text: 'Cooperate selectively. Release positive data and formally contest the memo.',
-      subtext: '-Opinion +Stability +Extremism',
-      effects: { public_opinion: -8, stability: +5, extremism: +5 }
+      subtext: '-Opinion +Stability +Extremism -Budget',
+      effects: { public_opinion: -5, stability: +10, extremism: +10, budget: -50 }
     },
     {
       text: 'Dismiss the investigation entirely. The outcomes speak for themselves.',
       subtext: '-Opinion +Extremism +Stability',
-      effects: { public_opinion: -20, extremism: +12, stability: +8 }
+      effects: { public_opinion: -20, extremism: +15, stability: -10 }
     }
   ]
 }
@@ -4994,7 +4994,7 @@ let animPulse = false;
 let hoveredSpeciesId = null;
 
 function createInitialState(difficulty = 'normal') {
-  const mult = difficulty === 'extinction' ? 1.8 : difficulty === 'hard' ? 1.3 : difficulty === 'easy' ? 0.6 : 1.0;
+  const mult = difficulty === 'extinction' ? 2.5 : difficulty === 'hard' ? 2.0 : difficulty === 'easy' ? 0.5 : 1.0;
   const st = {
     version: '22',
     turn: 0, playMode: 'sapiens', difficulty, diffMult: mult,
@@ -5925,9 +5925,10 @@ function advanceTurn() {
     }
   });
 
-  if (GS.integration_score >= 90 && m.rights_conflict < 60 && !GS._hintedRightsWall) {
+  // === INTEGRATION WIN CONDITION UPDATE ===
+  if (GS.integration_score >= 90 && (m.rights_conflict < 100 || GS.resources.public_opinion < 90) && !GS._hintedRightsWall) {
     GS._hintedRightsWall = true;
-    addNews('⚑ INTEGRATION AT 90% but the rights movement needs to reach 75% for Hominini Harmony. Choose rights-affirming responses to push it higher.', 'event');
+    addNews('⚑ INTEGRATION AT 90%! Remember: Rights must reach 100% and Public Opinion ≥90% for Hominini Harmony.', 'event');
   }
   // Snapshot pops for trend arrows in tooltips
   if (!GS.prevPops) GS.prevPops = {};
@@ -6041,7 +6042,52 @@ function advanceTurn() {
     const evIdx = EVENTS.findIndex(e => e.id === 'finalreckoning');
     if (evIdx >= 0) EVENTS[evIdx] = finalEv;
   }
-  if (GS.turn > 3) {
+  // === PUSHBACK PRIORITY SYSTEM ===
+  let _pushbackFired = false;
+  // Pushback 1: Rights >= 50 (fires once per run)
+  if (
+    GS.meters.rights_conflict >= 50 &&
+    !GS.integrationMilestonesSeen.includes('pushback_rights_50_fired') &&
+    !GS.events_seen.includes('pushback_rights_50')
+  ) {
+    _pushbackFired = true;
+    GS.integrationMilestonesSeen.push('pushback_rights_50_fired');
+    const _ev1 = EVENTS.find(e => e.id === 'pushback_rights_50');
+    if (_ev1 && !stagedEvents.find(e => e.id === _ev1.id)) stagedEvents.push(_ev1);
+  }
+  // Pushback 2: Integration >= 50 (fires once per run)
+  if (
+    GS.integration_score >= 50 &&
+    !GS.integrationMilestonesSeen.includes('pushback_integration_50_fired') &&
+    !GS.events_seen.includes('pushback_integration_50')
+  ) {
+    _pushbackFired = true;
+    GS.integrationMilestonesSeen.push('pushback_integration_50_fired');
+    const _ev2 = EVENTS.find(e => e.id === 'pushback_integration_50');
+    if (_ev2 && !stagedEvents.find(e => e.id === _ev2.id)) stagedEvents.push(_ev2);
+  }
+  // Pushback 3: Disease <= 0 (repeatable, cooldown 10 turns)
+  if (
+    GS.meters.disease <= 0 &&
+    (GS.turn - (GS.diseaseZeroLastTurn || -99)) >= 10
+  ) {
+    _pushbackFired = true;
+    GS.diseaseZeroLastTurn = GS.turn;
+    const _ev3 = EVENTS.find(e => e.id === 'pushback_disease_zero');
+    if (_ev3 && !stagedEvents.find(e => e.id === _ev3.id)) stagedEvents.push(_ev3);
+  }
+  // Pushback 4: Public Opinion >= 75 (repeatable, cooldown 8 turns)
+  if (
+    GS.resources.public_opinion >= 75 &&
+    (GS.turn - (GS.opinion75LastTurn || -99)) >= 8
+  ) {
+    _pushbackFired = true;
+    GS.opinion75LastTurn = GS.turn;
+    const _ev4 = EVENTS.find(e => e.id === 'pushback_opinion_75');
+    if (_ev4 && !stagedEvents.find(e => e.id === _ev4.id)) stagedEvents.push(_ev4);
+  }
+  // === END PUSHBACK PRIORITY SYSTEM ===
+  if (GS.turn > 3 && !_pushbackFired) {
   const eventsPerTurn = GS.difficulty === 'hard' ? 2 : GS.difficulty === 'extinction' ? 3 : 1;
   
   const eligible = EVENTS.filter(e => {
@@ -6120,55 +6166,7 @@ function advanceTurn() {
   saveGame(true);
   const endResult = checkEndConditions();
   if (endResult) { showResultScreen(endResult); return; }
-  // =========================================================
-  // PUSHBACK EVENT TRIGGERS -- fire when player doing too well
-  // =========================================================
-
-  // Pushback 1: Rights >= 50 (fires once per run)
-  if (
-    GS.meters.rights_conflict >= 50 &&
-    !GS.integrationMilestonesSeen.includes('pushback_rights_50_fired') &&
-    !GS.events_seen.includes('pushback_rights_50')
-  ) {
-    GS.integrationMilestonesSeen.push('pushback_rights_50_fired');
-    const _ev1 = EVENTS.find(e => e.id === 'pushback_rights_50');
-    if (_ev1 && !stagedEvents.find(e => e.id === _ev1.id)) stagedEvents.push(_ev1);
-  }
-
-  // Pushback 2: Integration >= 50 (fires once per run)
-  if (
-    GS.integration_score >= 50 &&
-    !GS.integrationMilestonesSeen.includes('pushback_integration_50_fired') &&
-    !GS.events_seen.includes('pushback_integration_50')
-  ) {
-    GS.integrationMilestonesSeen.push('pushback_integration_50_fired');
-    const _ev2 = EVENTS.find(e => e.id === 'pushback_integration_50');
-    if (_ev2 && !stagedEvents.find(e => e.id === _ev2.id)) stagedEvents.push(_ev2);
-  }
-
-  // Pushback 3: Disease <= 0 (repeatable, cooldown 10 turns)
-  if (
-    GS.meters.disease <= 0 &&
-    (GS.turn - (GS.diseaseZeroLastTurn || -99)) >= 10
-  ) {
-    GS.diseaseZeroLastTurn = GS.turn;
-    const _ev3 = EVENTS.find(e => e.id === 'pushback_disease_zero');
-    if (_ev3 && !stagedEvents.find(e => e.id === _ev3.id)) stagedEvents.push(_ev3);
-  }
-
-  // Pushback 4: Public Opinion >= 75 (repeatable, cooldown 8 turns)
-  if (
-    GS.resources.public_opinion >= 75 &&
-    (GS.turn - (GS.opinion75LastTurn || -99)) >= 8
-  ) {
-    GS.opinion75LastTurn = GS.turn;
-    const _ev4 = EVENTS.find(e => e.id === 'pushback_opinion_75');
-    if (_ev4 && !stagedEvents.find(e => e.id === _ev4.id)) stagedEvents.push(_ev4);
-  }
-
-  // =========================================================
-  // END PUSHBACK TRIGGERS
-  // =========================================================
+  // (Pushback triggers relocated above random event selection — see PUSHBACK PRIORITY SYSTEM)
 
   /* END TURN FIX — Fix 3: flush staged events into eventQueue atomically */
   stagedEvents.forEach(ev => {
@@ -6781,7 +6779,8 @@ function checkEndConditions() {
     return { type:'lose', title:'ECOLOGICAL COLLAPSE', subtitle:'All high-cognition non-sapiens extinct.', flavor:'The world is empty of all other humans. H. sapiens stands alone, not triumphant,, but diminished.' };
   }
   
-  if (GS.integration_score >= 100 && m.rights_conflict >= 75) { ['luzonensis','antecessor','habilis','ergaster','georgicus'].forEach(id => unlockMode(id)); return { type:'win', reason:'integration', title:'HOMININI HARMONY', subtitle:'True Integration achieved.', flavor:'"We did not inherit this planet alone. Tonight, for the first time in 40,000 years, that story continues."', unlocks:['luzonensis','antecessor','habilis','ergaster','georgicus'] }; }
+  // === INTEGRATION WIN CONDITION UPDATE ===
+  if (GS.integration_score >= 100 && m.rights_conflict >= 100 && GS.resources.public_opinion >= 90) { ['luzonensis','antecessor','habilis','ergaster','georgicus'].forEach(id => unlockMode(id)); return { type:'win', reason:'integration', title:'HOMININI HARMONY', subtitle:'True Integration achieved.', flavor:'"We did not inherit this planet alone. Tonight, for the first time in 40,000 years, that story continues."', unlocks:['luzonensis','antecessor','habilis','ergaster','georgicus'] }; }
 
   if (GS.turn >= 240 && m.stability >= 50) { ['neanderthal','denisovan','heidelbergensis','erectus','floresiensis'].forEach(id => unlockMode(id)); return { type:'win', reason:'survival', title:'SURVIVAL WIN', subtitle:'20 years managed. The world endures.', flavor:'We are the human race. Not the only human race that ever lived, but the one that learned, at great cost, to share a world it once thought was only its own.', unlocks:['neanderthal','denisovan','heidelbergensis','erectus','floresiensis'] }; }
   if (GS.turn >= 240) return { type:'lose', title:'MANAGEMENT FAILURE', subtitle:'20 years without resolution. The window has closed.', flavor:'The threshold was never reached. Two decades of insufficient management left the crisis unresolved, and history moved on without a miracle.' };
@@ -6953,7 +6952,7 @@ const ACHIEVEMENTS_DEF = [
   { id:'war_crimes',       icon:'🔴', title:'WAR CRIMES',         desc:'Three or more extermination orders issued.',          check: gs => (gs.extermination_count||0)>=3 },
   { id:'pacifist',         icon:'🕊️', title:'PACIFIST',           desc:'Reached Turn 100 with zero extermination orders.',    check: gs => (gs.turn||0)>=100&&(gs.extermination_count||0)===0 },
   { id:'twenty_years',     icon:'📅', title:'TWENTY YEARS',       desc:'Survived all 240 turns as UN Special Representative.', check: gs => (gs.turn||0)>=240 },
-  { id:'hominini',         icon:'🌍', title:'HOMININI HARMONY',   desc:'Achieved the Integration win: all species recognized.', check: gs => (gs.integration_score||0)>=100 && (gs.meters?.rights_conflict||0)>=75 },
+  { id:'hominini',         icon:'🌍', title:'HOMININI HARMONY',   desc:'Achieved the Integration win: all species recognized.', check: gs => (gs.integration_score||0)>=100 && (gs.meters?.rights_conflict||0)>=100 && (gs.resources?.public_opinion||0)>=90 },
   { id:'great_silence',    icon:'🌑', title:'THE GREAT SILENCE',  desc:'Five or more species went extinct.',                  check: gs => Object.values(gs.species||{}).filter(s=>s.extinct).length>=5 },
   { id:'interbreeder',     icon:'🧬', title:'INTERBREEDER',       desc:'Three or more confirmed cross-species unions.',       check: gs => (gs.interbreedingPairs||[]).length>=3 },
   { id:'codex_keeper',     icon:'📖', title:'CODEX KEEPER',       desc:'Encountered 10 or more distinct species.',            check: gs => Object.values(gs.species||{}).filter(s=>s.encountered).length>=10 },
@@ -8012,7 +8011,7 @@ function renderIntel() {
     </div>
     <div class="intel-block"><div class="intel-block-title">WIN CONDITIONS</div>
       <div class="intel-row"><span class="intel-label">🏁 Survival</span><span class="iv-amber">T${240-GS.turn} remaining</span></div>
-      <div class="intel-row"><span class="intel-label">🌿 Integration</span><span class="${GS.integration_score>=100&&m.rights_conflict>=75?'iv-green':GS.integration_score>=80||m.rights_conflict>=60?'iv-amber':'iv-red'}">${Math.round(GS.integration_score)}%/100% + Rights ${Math.round(m.rights_conflict)}%/75%</span></div>
+      <div class="intel-row"><span class="intel-label">🌿 Integration</span><span class="${GS.integration_score>=100&&m.rights_conflict>=100&&GS.resources.public_opinion>=90?'iv-green':GS.integration_score>=80||m.rights_conflict>=75?'iv-amber':'iv-red'}">${Math.round(GS.integration_score)}%/100% + Rights ${Math.round(m.rights_conflict)}%/100% + Opinion ${Math.round(GS.resources.public_opinion)}%/90%</span></div>
       <div class="intel-row"><span class="intel-label">💀 Extinction</span><span style="color:var(--text-dim)">${extinct}/15 eliminated</span></div>
 
     </div>
@@ -8756,7 +8755,14 @@ function initParticles(){
 window.addEventListener('load', () => {
   initParticles();
   checkSaveExists();
-  
+  // === DIFFICULTY PERSISTENCE FIX ===
+  const _savedDiff = (() => {
+    try { const raw = localStorage.getItem('hominin_save'); if (raw) { const d = JSON.parse(raw); if (d.difficulty) return d.difficulty; } } catch(e) {}
+    return localStorage.getItem('hominin_difficulty') || 'normal';
+  })();
+  const _diffSel = document.getElementById('difficulty-select');
+  if (_diffSel) { _diffSel.value = _savedDiff; localStorage.setItem('hominin_difficulty', _savedDiff); }
+  // === END DIFFICULTY PERSISTENCE FIX ===
   canvas=document.getElementById('map-canvas');
   if(canvas){
     ctx=canvas.getContext('2d');
